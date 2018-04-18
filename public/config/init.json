@@ -1,8 +1,8 @@
 {
-  "title": "苏州供排水信息管理系统",
+  "title": "XXXX系统",
   "logo": "./images/header/logo.png",
   "ico": "favicon.ico",
-  "message": "{getUsername}您好，欢迎您登录苏州市供排水信息管理系统,今天是{getDateMessage}",
+  "message": "",
   "cfgs": [
     { "key": "mapcfg", "url": "./config/mapcfg.js", "loaded": true },
     { "key": "servicecfg", "url": "./config/taskServices.js", "loaded": true },
@@ -10,7 +10,7 @@
   ],
   "onload": {
     "main": [
-      { "toolKey": "INDEX", "name": "综合集成首页", "params": "" }
+      { "toolKey": "INDEX", "name": "", "params": "" }
     ],
 
     "map": [

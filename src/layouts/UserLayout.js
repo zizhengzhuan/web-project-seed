@@ -4,8 +4,7 @@ import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
 import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
-import logo from '../assets/logo.svg';
-import { getRoutes } from '../utils/utils';
+import { getRoutes, getTitle, getLogo } from '../utils/utils';
 
 const links = [
   {
@@ -37,7 +36,7 @@ class UserLayout extends React.PureComponent {
     const { pathname } = location;
     let title = 'Ant Design Pro';
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
+      title = `${routerData[pathname].name} - ${getTitle()}`;
     }
     return title;
   }
@@ -50,11 +49,10 @@ class UserLayout extends React.PureComponent {
             <div className={styles.top}>
               <div className={styles.header}>
                 <Link to="/">
-                  <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>Ant Design</span>
+                  <img alt="logo" className={styles.logo} src={getLogo()} />
+                  <span className={styles.title}>{getTitle()}</span>
                 </Link>
               </div>
-              <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
             </div>
             <Switch>
               {getRoutes(match.path, routerData).map(item => (

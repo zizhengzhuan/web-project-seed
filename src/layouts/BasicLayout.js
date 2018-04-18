@@ -10,7 +10,7 @@ import { enquireScreen } from 'enquire-js';
 import GlobalHeader from '../components/GlobalHeader';
 import HorizontalMenu from '../components/HorizontalMenu';
 import NotFound from '../routes/Exception/404';
-import { getRoutes } from '../utils/utils';
+import { getRoutes, getTitle } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.svg';
@@ -97,9 +97,9 @@ export default class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = getTitle();
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
+      title = `${routerData[pathname].name} - ${getTitle()}`;
     }
     return title;
   }
