@@ -64,7 +64,7 @@ export default class BlankLayout extends React.PureComponent {
       urlParams.searchParams.delete('redirect');
       window.history.replaceState(null, 'redirect', urlParams.href);
     } else {
-      return '/home';
+      return 'home';
     }
     return redirect;
   };
@@ -105,7 +105,7 @@ export default class BlankLayout extends React.PureComponent {
                 redirectPath="/exception/403"
               />
             ))}
-            <Redirect exact from="/" to={bashRedirect} />
+            <Redirect exact from="/blank" to={`/blank/${bashRedirect}`} />
             <Route render={NotFound} />
           </Switch>
         </Content>
