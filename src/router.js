@@ -17,11 +17,13 @@ function RouterConfig({ history, app }) {
   const routerData = getRouterData(app);
   const UserLayout = routerData['/user'].component;
   const BasicLayout = routerData['/'].component;
+  const BlankLayout = routerData['/blank'].component;
   return (
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
         <Switch>
           <Route path="/user" component={UserLayout} />
+          <Route path="/blank" component={BlankLayout} />
           <AuthorizedRoute
             path="/"
             render={props => <BasicLayout {...props} />}
