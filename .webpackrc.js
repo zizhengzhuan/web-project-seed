@@ -1,7 +1,6 @@
 export default {
   entry: 'src/index.js',
   extraBabelPlugins: [
-    'transform-decorators-legacy',
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
     ['import', { libraryName: 'yd', libraryDirectory: 'es', style: true }, 'yd-import'],
     ['import', { libraryName: 'yd-gis', libraryDirectory: 'es', style: true, camel2DashComponentName: false }, 'yd-gis-import'],
@@ -22,6 +21,9 @@ export default {
     development: {
       extraBabelPlugins: ['dva-hmr'],
     },
+    production: {
+      devtool: 'source-map',
+    }
   },
   alias: {
     // 'components': path.resolve(__dirname, 'src/components/'),
