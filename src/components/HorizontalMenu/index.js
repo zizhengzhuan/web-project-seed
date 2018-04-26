@@ -7,18 +7,18 @@ import { urlToList } from '../_utils/pathTools';
 
 const { SubMenu } = Menu;
 
-// Allow menu.js config icon as string or ReactNode
+// Allow menu.js config icon as string or ReactNode or null
 //   icon: 'setting',
 //   icon: 'http://demo.com/icon.png',
 //   icon: <Icon type="setting" />,
 const getIcon = icon => {
   if (typeof icon === 'string' && icon.indexOf('http') === 0) {
     return <img src={icon} alt="icon" className={styles.icon} />;
-  }
-  if (typeof icon === 'string') {
+  } else if (typeof icon === 'string' && icon.length > 0) {
     return <Icon type={icon} />;
+  } else {
+    return null;
   }
-  return icon;
 };
 
 export const getMeunMatcheys = (flatMenuKeys, path) => {

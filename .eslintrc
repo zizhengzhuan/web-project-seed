@@ -10,7 +10,6 @@
     "jasmine": true
   },
   "rules": {
-    "class-methods-use-this": [0],
     "generator-star-spacing": [0],
     "consistent-return": [0],
     "react/forbid-prop-types": [0],
@@ -20,15 +19,18 @@
     "react/jsx-no-bind": [0],
     "react/prop-types": [0],
     "react/prefer-stateless-function": [0],
-    "react/jsx-wrap-multilines": ["error", {
-      "declaration": "parens-new-line",
-      "assignment": "parens-new-line",
-      "return": "parens-new-line",
-      "arrow": "parens-new-line",
-      "condition": "parens-new-line",
-      "logical": "parens-new-line",
-      "prop": "ignore"
-    }],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "parens-new-line",
+        "prop": "ignore"
+      }
+    ],
     "no-else-return": [0],
     "no-restricted-syntax": [0],
     "import/no-extraneous-dependencies": [0],
@@ -43,17 +45,24 @@
     "no-bitwise": [0],
     "no-cond-assign": [0],
     "import/no-unresolved": [0],
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "ignore"
-    }],
+    "prefer-destructuring": [0],
+    "no-plusplus": [0],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
     "object-curly-newline": [0],
     "function-paren-newline": [0],
     "no-restricted-globals": [0],
-    "require-yield": [1]
+    "require-yield": [1],
+    "no-underscore-dangle": [1],
+    "no-param-reassign": [1]
   },
   "parserOptions": {
     "ecmaFeatures": {
