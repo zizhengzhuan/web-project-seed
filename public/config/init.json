@@ -1,7 +1,6 @@
 {
   "title": "XXXX系统",
   "logo": "./images/header/logo.png",
-  "ico": "favicon.ico",
   "message": "",
   "cfgs": [
     { "key": "mapcfg", "url": "./config/mapcfg.js", "loaded": true },
