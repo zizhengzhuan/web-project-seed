@@ -2,7 +2,7 @@ var menu = [
   {
     name: '异常',
     path: 'exception',
-    icon: '',
+    icon: 'form',
     image: './images/menus/设备管理.png',
     children: [
       {

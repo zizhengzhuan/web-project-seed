@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Tooltip } from 'antd';
+import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
@@ -48,17 +48,19 @@ export default class GlobalHeader extends PureComponent {
     onCollapse(!collapsed);
     this.triggerResizeEvent();
   };
+  /* eslint-disable*/
   @Debounce(600)
   triggerResizeEvent() {
-    // eslint-disable-line
     const event = document.createEvent('HTMLEvents');
     event.initEvent('resize', true, false);
     window.dispatchEvent(event);
   }
   render() {
     const {
-      currentUser,
+      currentUser = {},
+      collapsed,
       fetchingNotices,
+      isMobile,
       logo,
       onNoticeVisibleChange,
       onMenuClick,
@@ -84,13 +86,17 @@ export default class GlobalHeader extends PureComponent {
     const noticeData = this.getNoticeData();
     return (
       <div className={styles.header}>
-        <div className={styles.logo} key="logo">
-          <Link to="/">
-            <img src={logo} alt="logo" />
-            <h1>Hope Water</h1>
-          </Link>
-        </div>
-        <div className={styles.middle}>{this.props.children}</div>
+        {isMobile && [
+          <Link to="/" className={styles.logo} key="logo">
+            <img src={logo} alt="logo" width="32" />
+          </Link>,
+          <Divider type="vertical" key="line" />,
+        ]}
+        <Icon
+          className={styles.trigger}
+          type={collapsed ? 'menu-unfold' : 'menu-fold'}
+          onClick={this.toggle}
+        />
         <div className={styles.right}>
           <HeaderSearch
             className={`${styles.action} ${styles.search}`}
@@ -103,14 +109,14 @@ export default class GlobalHeader extends PureComponent {
               console.log('enter', value); // eslint-disable-line
             }}
           />
-          <Tooltip title="切换主题">
+          <Tooltip title="使用文档">
             <a
               target="_blank"
               href="http://pro.ant.design/docs/getting-started"
               rel="noopener noreferrer"
               className={styles.action}
             >
-              <Icon type="skin" style={{ color: '#fff' }} />
+              <Icon type="question-circle-o" />
             </a>
           </Tooltip>
           <NoticeIcon
