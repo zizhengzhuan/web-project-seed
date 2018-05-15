@@ -70,8 +70,8 @@
     "stylelint": "^8.4.0",
     "stylelint-config-prettier": "^3.2.0",
     "stylelint-config-standard": "^18.0.0",
-    "yc": "^2.2.0",
-    "yd": "^2.11.1",
+    "yc": "^2.3.0",
+    "yd": "^2.12.4",
     "yd-gis": "^2.6.1"
   },
   "optionalDependencies": {
