@@ -25,7 +25,7 @@ const handleCatch = (err) => {
 }
 
 http.setConfig({
-  timeout: 1,
+  timeout: 0,
   onCatch: handleCatch,
 })
 
