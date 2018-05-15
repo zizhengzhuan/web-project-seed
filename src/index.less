@@ -28,4 +28,14 @@ body {
   .ant-spin-container {
     overflow: visible !important;
   }
+  // 临时解决异常错误提醒（notification）内容换行问题
+  .ant-notification-notice-message,
+  .ant-notification-notice-description {
+    word-wrap: break-word;
+    width: calc(~'100% - 24px');
+  }
+
+  .ant-notification-notice-description {
+    padding-right: 24px;
+  }
 }
