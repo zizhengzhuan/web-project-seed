@@ -6,16 +6,11 @@ export default {
     ['import', { libraryName: 'yd-gis', libraryDirectory: 'es', style: true, camel2DashComponentName: false }, 'yd-gis-import'],
   ],
   proxy: {
-    '/proxy7080': {
-      target: 'http://192.168.8.229:7080/',
+    '/proxy': {
+      target: 'http://192.168.8.113:8091/',
       changeOrigin: true,
       pathRewrite: { '^/proxy7080' : '' }
     },
-    '/proxy8023': {
-      target: 'http://192.168.8.229:8023/',
-      changeOrigin: true,
-      pathRewrite: { '^/proxy8023' : '' }
-    }
   },
   env: {
     development: {

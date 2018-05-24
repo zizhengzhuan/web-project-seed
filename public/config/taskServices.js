@@ -11,16 +11,8 @@ var taskServices = {
     {
       'name': 'QUERY_SVR',
       'description': '管网查询',
-      'url': 'proxy7080/ServiceEngine/rest/services/NetServer/jsgs',
+      'url': '/proxy/ServiceEngine/rest/services/NetServer/tgzf',
       'type': 'net',
-      'for': '',
-      'proxy': 'a'
-    },
-    {
-      'name': 'USER_SVR',
-      'description': '用户服务',
-      'url': 'proxy7080/ServiceEngine/rest/us',
-      'type': '',
       'for': '',
       'proxy': 'a'
     }
