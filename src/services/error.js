@@ -1,6 +1,4 @@
-import http from '../utils/request';
-
-const { request } = http.base;
+import request from '../utils/request';
 
 export async function query404() {
   return request('/api/404');

@@ -1,7 +1,5 @@
 import { stringify } from 'qs';
-import http from '../utils/request';
-
-const { request } = http.base;
+import request from '../utils/request';
 
 export async function queryProjectNotice() {
   return request('/api/project/notice');
