@@ -11,6 +11,9 @@ function post({ svn = 'QUERY_SVR', path = '', data = {} }) {
   return request(url, {
     method: 'POST',
     body: {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
       ...data,
     },
   });

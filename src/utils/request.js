@@ -67,8 +67,22 @@ function request(url, options) {
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
+      /**
+       * https://davidwalsh.name/fetch
+       *
+       * clone() - Creates a clone of a Response object.
+       * error() - Returns a new Response object associated with a network error.
+       * redirect() - Creates a new response with a different URL.
+       * arrayBuffer() - Returns a promise that resolves with an ArrayBuffer.
+       * blob() - Returns a promise that resolves with a Blob.
+       * formData() - Returns a promise that resolves with a FormData object.
+       * json() - Returns a promise that resolves with a JSON object.
+       * text() - Returns a promise that resolves with a USVString (text).
+       */
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
+      } else if (newOptions.blob) {
+        return response.blob();
       }
       return response.json();
     })
