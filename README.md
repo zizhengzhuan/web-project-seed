@@ -21,6 +21,8 @@ npm run test -- 代码测试
 npm run prettier -- 代码格式自动修复
 ```
 
+在依赖包包管理方面，支持使用 npm 以及 yarn 两种工具
+
 ## 目录说明
 
 ```bash
@@ -56,7 +58,7 @@ npm run prettier -- 代码格式自动修复
 
 ### layouts
 
-用于网站基本布局设置，类似于之前所定义的“皮”的概念
+用于网站基本布局开发
 
 ### routes
 
