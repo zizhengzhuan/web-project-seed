@@ -1,5 +1,5 @@
-{
-  "singleQuote": true,   // 换行字符串阈值
+module.exports = {
+  "singleQuote": true,
   "trailingComma": "es5",
   "printWidth": 100,
   "overrides": [
