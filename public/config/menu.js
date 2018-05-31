@@ -8,7 +8,6 @@ var menu = [
       {
         name: '403',
         path: '403',
-        home: true,
       },
       {
         name: '404',
