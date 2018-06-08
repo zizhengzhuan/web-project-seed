@@ -1,11 +1,11 @@
 {
   "title": "XXXX系统",
-  "logo": "/favicon.ico",
+  "logo": "favicon.ico",
   "message": "",
   "cfgs": [
-    { "key": "mapcfg", "url": "/config/mapcfg.js", "loaded": true },
-    { "key": "servicecfg", "url": "/config/taskServices.js", "loaded": true },
-    { "key": "menu", "url": "/config/menu.js", "loaded": true }
+    { "key": "mapcfg", "url": "config/mapcfg.js", "loaded": true },
+    { "key": "servicecfg", "url": "config/taskServices.js", "loaded": true },
+    { "key": "menu", "url": "config/menu.js", "loaded": true }
   ],
   "onload": {
     "main": [
