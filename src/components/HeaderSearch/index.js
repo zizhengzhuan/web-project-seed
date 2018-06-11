@@ -5,14 +5,6 @@ import classNames from 'classnames';
 import styles from './index.less';
 
 export default class HeaderSearch extends PureComponent {
-  static defaultProps = {
-    defaultActiveFirstOption: false,
-    onPressEnter: () => {},
-    onSearch: () => {},
-    className: '',
-    placeholder: '',
-    dataSource: [],
-  };
   static propTypes = {
     className: PropTypes.string,
     placeholder: PropTypes.string,
@@ -20,6 +12,14 @@ export default class HeaderSearch extends PureComponent {
     onPressEnter: PropTypes.func,
     defaultActiveFirstOption: PropTypes.bool,
     dataSource: PropTypes.array,
+  };
+  static defaultProps = {
+    defaultActiveFirstOption: false,
+    onPressEnter: () => {},
+    onSearch: () => {},
+    className: '',
+    placeholder: '',
+    dataSource: [],
   };
   state = {
     searchMode: false,
