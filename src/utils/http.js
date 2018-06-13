@@ -87,10 +87,10 @@ const defaultErrorText = '错误提示信息为空';
 
 const error = {
   validate: res => {
-    if (res.msgCode) {
-      return res.msgCode !== 0;
-    } else if (res === '' || res === null || res === undefined || res.error) {
+    if (res === '' || res === null || res === undefined || res.error) {
       return true;
+    } else if (res.msgCode) {
+      return res.msgCode !== 0;
     }
     return false;
   },
