@@ -1,4 +1,4 @@
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import { stringify } from 'qs';
 import { sysConfig } from 'yc';
 import request from './request';
@@ -23,7 +23,7 @@ function getFuncPath(path = '', params) {
     }
     // 参数序列化
     const nextPrams = {};
-    for(const [key, value] of Object.entries(params)) {
+    for (const [key, value] of Object.entries(params)) {
       if (typeof value === 'object') {
         nextPrams[key] = JSON.stringify(value);
       } else {
@@ -67,13 +67,8 @@ function getTaskServiceCfg(svn) {
   return taskCfg.get(svn);
 }
 
-function getUrl(opt) {
-  const {
-    svn,
-    path,
-    params = null,
-    isProxy = true,
-  } = opt;
+export function getUrl(opt) {
+  const { svn, path, params = null, isProxy = true } = opt;
   const currentCfg = getTaskServiceCfg(svn);
   let url = isProxy ? currentCfg.url : currentCfg.originalUrl;
   url += getFuncPath(path, params);
@@ -87,10 +82,10 @@ const defaultErrorText = '错误提示信息为空';
 
 const error = {
   validate: res => {
-    if (res === '' || res === null || res === undefined || res.error) {
-      return true;
-    } else if (res.msgCode) {
+    if (res.msgCode) {
       return res.msgCode !== 0;
+    } else if (res === '' || res === null || res === undefined || res.error) {
+      return true;
     }
     return false;
   },
@@ -109,34 +104,54 @@ const error = {
   },
 };
 
-export function get({ svn = 'QUERY_SVR', path = '', data = {} }) {
-  const url = getUrl({ svn, path, params: data });
-  return request(url).then(res => {
-    if (error.validate(res)) {
-      error.show(res);
-    } else {
-      return res;
+const loading = {
+  loading: null,
+  show: () => {
+    if (loading.loading === null) {
+      loading.loading = message.loading('服务请求中···', 0);
     }
+  },
+  hide: () => {
+    if (loading.loading) {
+      loading.loading();
+      setTimeout(() => {
+        loading.loading = null;
+      }, 10);
+    }
+  },
+};
+
+export function get({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }) {
+  const url = getUrl({ svn, path, params: data });
+  loading.show();
+  return request(url).then(res => {
+    loading.hide();
+    if (validate && error.validate(res)) {
+      error.show(res);
+      return null;
+    }
+    return res;
   });
 }
 
-export function post({ svn = 'QUERY_SVR', path = '', data = {} }) {
+export function post({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }) {
   const url = getUrl({ svn, path });
   const formData = new FormData();
   for (const [key, value] of Object.entries(data)) {
     formData.append(key, value);
   }
-
+  loading.show();
   return request(url, {
     method: 'POST',
     body: formData,
   }).then(res => {
-    if (error.validate(res)) {
+    loading.hide();
+    if (validate && error.validate(res)) {
       error.show(res);
-    } else {
-      return res;
+      return null;
     }
+    return res;
   });
 }
 
-export default { get, post };
+export default { get, post, getUrl };
