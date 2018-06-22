@@ -1,4 +1,3 @@
-import { notification, message } from 'antd';
 import { stringify } from 'qs';
 import { sysConfig } from 'yc';
 import request from './request';
@@ -75,83 +74,20 @@ export function getUrl(opt) {
   return url;
 }
 
-const codeMessage = {
-  '-1': '',
-};
-const defaultErrorText = '错误提示信息为空';
-
-const error = {
-  validate: res => {
-    if (res.msgCode) {
-      return res.msgCode !== 0;
-    } else if (res === '' || res === null || res === undefined || res.error) {
-      return true;
-    }
-    return false;
-  },
-  show: res => {
-    let errortext = '';
-    if (res.msgCode) {
-      errortext = codeMessage[`${res.msgCode}`] || res.msg || defaultErrorText;
-    } else if (typeof res !== 'string') {
-      errortext = defaultErrorText;
-    }
-
-    notification.error({
-      message: `服务请求错误`,
-      description: errortext,
-    });
-  },
-};
-
-const loading = {
-  loading: null,
-  show: () => {
-    if (loading.loading === null) {
-      loading.loading = message.loading('服务请求中···', 0);
-    }
-  },
-  hide: () => {
-    if (loading.loading) {
-      loading.loading();
-      setTimeout(() => {
-        loading.loading = null;
-      }, 10);
-    }
-  },
-};
-
 export function get({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }) {
   const url = getUrl({ svn, path, params: data });
-  loading.show();
-  return request(url).then(res => {
-    loading.hide();
-    if (validate && error.validate(res)) {
-      error.show(res);
-      return null;
-    }
-    return res;
+  return request(url, {
+    validate,
   });
 }
 
 export function post({ svn = 'QUERY_SVR', path = '', data = {}, validate = true, contentType = 'www' }) {
   const url = getUrl({ svn, path });
-  // const formData = new FormData();
-  // for (const [key, value] of Object.entries(data)) {
-  //   formData.append(key, value);
-  // }
-  // loading.show();
   return request(url, {
     method: 'POST',
     body: data,
     contentType,
-  }).then(res => {
-    loading.hide();
-    if (validate && error.validate(res)) {
-      error.show(res);
-      return null;
-    }
-    return res;
+    validate,
   });
 }
 
