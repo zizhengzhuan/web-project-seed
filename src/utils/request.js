@@ -1,7 +1,53 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
+
+const msdCodeMessage = {
+  '-1': '',
+};
+const defaultErrorText = '错误提示信息为空';
+
+const requestError = {
+  validate: res => {
+    if (res.msgCode) {
+      return res.msgCode !== 0;
+    } else if (res === '' || res === null || res === undefined || res.error) {
+      return true;
+    }
+    return false;
+  },
+  show: res => {
+    let errortext = '';
+    if (res.msgCode) {
+      errortext = msdCodeMessage[`${res.msgCode}`] || res.msg || defaultErrorText;
+    } else if (typeof res !== 'string') {
+      errortext = defaultErrorText;
+    }
+
+    notification.error({
+      message: `服务请求错误`,
+      description: errortext,
+    });
+  },
+};
+
+const loading = {
+  loading: null,
+  show: () => {
+    if (loading.loading === null) {
+      loading.loading = message.loading('服务请求中···', 0);
+    }
+  },
+  hide: () => {
+    if (loading.loading) {
+      loading.loading();
+      setTimeout(() => {
+        loading.loading = null;
+      }, 10);
+    }
+  },
+};
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -21,6 +67,7 @@ const codeMessage = {
   504: '网关超时。',
 };
 function checkStatus(response) {
+  loading.hide();
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -45,25 +92,53 @@ function checkStatus(response) {
 function request(url, options) {
   const defaultOptions = {
     credentials: 'include',
+    validate: true,
+    showLoading: true,
   };
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-    if (!(newOptions.body instanceof FormData)) {
-      newOptions.headers = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        ...newOptions.headers,
-      };
-      newOptions.body = JSON.stringify(newOptions.body);
+    const { body } = newOptions;
+    if (!(body instanceof FormData)) {
+      if (newOptions.contentType === 'www') {
+        newOptions.headers = {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          ...newOptions.headers,
+        };
+        let queryParams = '';
+        if (Object.prototype.toString.call(body) === '[object Object]') {
+          queryParams = Object.keys(body)
+            .map(key => {
+              let val = body[key];
+              if (val instanceof Object) {
+                val = JSON.stringify(val);
+              }
+              return `${key}=${val}`;
+            })
+            .join('&');
+        }
+        newOptions.body = queryParams;
+      } else {
+        newOptions.headers = {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+          ...newOptions.headers,
+        };
+        newOptions.body = JSON.stringify(newOptions.body);
+      }
     } else {
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
+        'Content-Type': 'multipart/form-data; charset=utf-8',
         ...newOptions.headers,
       };
     }
   }
 
+  if (newOptions.showLoading) {
+    loading.show();
+  }
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
@@ -79,12 +154,17 @@ function request(url, options) {
        * json() - Returns a promise that resolves with a JSON object.
        * text() - Returns a promise that resolves with a USVString (text).
        */
-      if (newOptions.method === 'DELETE' || response.status === 204) {
-        return response.text();
-      } else if (newOptions.blob) {
+      if (newOptions.blob) {
         return response.blob();
       }
       return response.json();
+    })
+    .then(res => {
+      if (newOptions.validate && requestError.validate(res)) {
+        requestError.show(res);
+        return null;
+      }
+      return res;
     })
     .catch(e => {
       const { dispatch } = store;

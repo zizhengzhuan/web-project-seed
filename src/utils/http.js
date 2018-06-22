@@ -134,16 +134,17 @@ export function get({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }
   });
 }
 
-export function post({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }) {
+export function post({ svn = 'QUERY_SVR', path = '', data = {}, validate = true, contentType = 'www' }) {
   const url = getUrl({ svn, path });
-  const formData = new FormData();
-  for (const [key, value] of Object.entries(data)) {
-    formData.append(key, value);
-  }
-  loading.show();
+  // const formData = new FormData();
+  // for (const [key, value] of Object.entries(data)) {
+  //   formData.append(key, value);
+  // }
+  // loading.show();
   return request(url, {
     method: 'POST',
-    body: formData,
+    body: data,
+    contentType,
   }).then(res => {
     loading.hide();
     if (validate && error.validate(res)) {

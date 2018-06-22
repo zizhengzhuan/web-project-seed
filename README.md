@@ -7,6 +7,12 @@
 1. 执行 `npm i` 安装依赖包
 2. 执行 `npm start` 启动开发环境
 
+## 版本更新
+
+### 1.0.0 （2018-06-22）
+
++ [refactor] 将 http 请求相关逻辑合并至 yc/http 之中，暂时依赖于 utils/request.js。同时保留 utils/http.js 用于过度，未来会被删除
+
 ## 命令说明
 
 ```bash
