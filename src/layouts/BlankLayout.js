@@ -89,6 +89,7 @@ export default class BlankLayout extends React.PureComponent {
           style={{
             overflow: 'auto',
             overflowX: 'hidden',
+            height: '100%',
           }}
         >
           <Switch>
