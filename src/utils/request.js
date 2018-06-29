@@ -33,14 +33,19 @@ const requestError = {
 };
 
 const loading = {
+  referenceCount: 0,
   loading: null,
   show: () => {
-    if (loading.loading === null) {
+    loading.referenceCount++;
+    if (loading.referenceCount === 1 && loading.loading === null) {
       loading.loading = message.loading('服务请求中···', 0);
     }
   },
   hide: () => {
-    if (loading.loading) {
+    if (loading.referenceCount > 0) {
+      loading.referenceCount--;
+    }
+    if (loading.referenceCount === 0 && loading.loading) {
       loading.loading();
       setTimeout(() => {
         loading.loading = null;
