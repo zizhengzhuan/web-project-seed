@@ -121,6 +121,7 @@ export const getRouterData = app => {
       ...router,
       name: router.name || menuItem.name,
       authority: router.authority || menuItem.authority,
+      params: { ...(router.params || {}), ...(menuItem.params || {}) },
       home: !!menuItem.home,
     };
     routerData[path] = router;
