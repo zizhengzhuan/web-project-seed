@@ -17,11 +17,29 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+      const res = yield call(queryCurrent);
+      if (res) {
+        const { data } = res;
+        const {
+          user: { gid: userid, username: name },
+        } = data;
+        yield put({
+          type: 'saveCurrentUser',
+          payload: {
+            name,
+            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+            userid,
+            notifyCount: 12,
+          },
+        });
+      } else {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: {
+            notifyCount: 0,
+          },
+        });
+      }
     },
   },
 

@@ -15,6 +15,14 @@ var taskServices = {
       'type': 'net',
       'for': '',
       'proxy': 'a'
+    },
+    {
+      'name': 'OMS_SVR',
+      'description': '运维服务',
+      'url': '/proxyOms/ServiceEngine/rest/omsService',
+      'type': 'net',
+      'for': '',
+      'proxy': 'a'
     }
   ]
 };

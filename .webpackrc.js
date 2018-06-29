@@ -3,13 +3,27 @@ export default {
   extraBabelPlugins: [
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
     ['import', { libraryName: 'yd', libraryDirectory: 'es', style: true }, 'yd-import'],
-    ['import', { libraryName: 'yd-gis', libraryDirectory: 'es', style: true, camel2DashComponentName: false }, 'yd-gis-import'],
+    [
+      'import',
+      {
+        libraryName: 'yd-gis',
+        libraryDirectory: 'es',
+        style: true,
+        camel2DashComponentName: false,
+      },
+      'yd-gis-import',
+    ],
   ],
   proxy: {
+    '/proxyOms': {
+      target: 'http://192.168.8.35:8080/',
+      changeOrigin: true,
+      pathRewrite: { '^/proxyOms': '' },
+    },
     '/proxy': {
       target: 'http://192.168.8.113:8091/',
       changeOrigin: true,
-      pathRewrite: { '^/proxy7080' : '' }
+      pathRewrite: { '^/proxy7080': '' },
     },
   },
   env: {
@@ -18,7 +32,7 @@ export default {
     },
     production: {
       devtool: 'source-map',
-    }
+    },
   },
   alias: {
     // 'components': path.resolve(__dirname, 'src/components/'),

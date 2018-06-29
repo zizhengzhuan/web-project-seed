@@ -101,7 +101,7 @@ function getFuncPath(path = '', params) {
     }
     // 参数序列化
     const nextPrams = {};
-    for(const [key, value] of Object.entries(params)) {
+    for (const [key, value] of Object.entries(params)) {
       if (typeof value === 'object') {
         nextPrams[key] = JSON.stringify(value);
       } else {
@@ -145,12 +145,7 @@ export function getTaskServiceCfg(svn) {
   return taskCfg.get(svn);
 }
 
-export function getUrl({
-  svn,
-  path,
-  params = null,
-  isProxy = true,
-}) {
+export function getUrl({ svn, path, params = null, isProxy = true }) {
   const currentCfg = getTaskServiceCfg(svn);
   let url = isProxy ? currentCfg.url : currentCfg.originalUrl;
   url += getFuncPath(path, params);

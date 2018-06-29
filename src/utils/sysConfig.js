@@ -1,6 +1,9 @@
 import { sysConfig } from 'yc';
 
-// sysConfig.setRoot('/');
+console.log('a');
+console.log('a');
+console.log('a');
+sysConfig.setRoot('/');
 
 export function getMenu() {
   return getCfgByKey('menu');

@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
-import { fakeAccountLogin } from '../services/api';
-import { setAuthority } from '../utils/authority';
+import { message } from 'antd';
+import { accountLogin, accountLogout } from '../services/api';
+import { setToken } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
 export default {
@@ -12,42 +13,48 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
-      // Login successfully
-      if (response.status === 'ok') {
+      const res = yield call(accountLogin, payload);
+      if (res) {
+        const {
+          data: { token },
+        } = res;
+        setToken(token);
         reloadAuthorized();
         yield put(routerRedux.push('/'));
+      } else {
+        yield put({ type: 'changeLoginStatus', payload: { status: 'error', type: 'account' } });
       }
     },
-    *logout(_, { put, select }) {
-      try {
-        // get location pathname
-        const urlParams = new URL(window.location.href);
-        const pathname = yield select(state => state.routing.location.pathname);
-        // add the parameters in the url
-        urlParams.searchParams.set('redirect', pathname);
-        window.history.replaceState(null, 'login', urlParams.href);
-      } finally {
-        yield put({
-          type: 'changeLoginStatus',
-          payload: {
-            status: false,
-            currentAuthority: 'guest',
-          },
-        });
-        reloadAuthorized();
-        yield put(routerRedux.push('/user/login'));
+    *logout(_, { call, put, select }) {
+      const res = yield call(accountLogout);
+      if (!res) {
+        message.warning('登出失败');
+      } else {
+        try {
+          // get location pathname
+          const urlParams = new URL(window.location.href);
+          const pathname = yield select(state => state.routing.location.pathname);
+          // add the parameters in the url
+          urlParams.searchParams.set('redirect', pathname);
+          window.history.replaceState(null, 'login', urlParams.href);
+        } finally {
+          yield put({
+            type: 'changeLoginStatus',
+            payload: {
+              status: false,
+              currentAuthority: 'guest',
+            },
+          });
+          reloadAuthorized();
+          yield put(routerRedux.push('/user/login'));
+        }
       }
     },
   },
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      setToken(payload.currentAuthority);
       return {
         ...state,
         status: payload.status,

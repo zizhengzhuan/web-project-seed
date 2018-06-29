@@ -1,13 +1,33 @@
+import { http } from 'yc';
+import { message } from 'antd';
 import request from '../utils/request';
+import { getInit } from '../utils/sysConfig';
 
-export async function fakeChartData() {
-  return request('/api/fake_chart_data');
+const { get } = http;
+const iniConfig = getInit();
+if (!iniConfig) {
+  message.warning('init.json 配置文件异常');
+}
+const { sys } = iniConfig;
+if (!sys) {
+  message.warning('sys 节点丢失');
 }
 
-export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
-    method: 'POST',
-    body: params,
+export async function accountLogin(params) {
+  const { password, userName } = params;
+  return get({
+    svn: 'OMS_SVR',
+    path: 'user/login',
+    data: { password, loginname: userName, sys },
+  });
+}
+
+export async function AccountLogout(params) {
+  const { password, userName } = params;
+  return get({
+    svn: 'OMS_SVR',
+    path: 'user/login',
+    data: { password, loginname: userName, sys },
   });
 }
 

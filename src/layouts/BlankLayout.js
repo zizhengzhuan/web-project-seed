@@ -78,10 +78,7 @@ export default class BlankLayout extends React.PureComponent {
     return title;
   }
   render() {
-    const {
-      routerData,
-      match,
-    } = this.props;
+    const { routerData, match } = this.props;
     const bashRedirect = this.getBashRedirect();
     const layout = (
       <Layout style={{ height: '100%' }}>

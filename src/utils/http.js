@@ -1,6 +1,9 @@
 import { stringify } from 'qs';
 import { getCfgByKey } from './sysConfig';
 import request from './request';
+import { getToken } from '../utils/Authority';
+
+const token = getToken();
 
 let taskCfg = null;
 
@@ -75,6 +78,7 @@ export function getUrl(opt) {
 }
 
 export function get({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }) {
+  data.token = token; // eslint-disable-line
   const url = getUrl({ svn, path, params: data });
   return request(url, {
     validate,
@@ -88,6 +92,7 @@ export function post({
   validate = true,
   contentType = 'www',
 }) {
+  data.token = token; // eslint-disable-line
   const url = getUrl({ svn, path });
   return request(url, {
     method: 'POST',

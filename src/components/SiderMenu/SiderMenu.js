@@ -28,14 +28,13 @@ const getIcon = icon => {
  * @param  menu
  */
 export const getFlatMenuKeys = menu =>
-  menu
-    .reduce((keys, item) => {
-      keys.push(item.path);
-      if (item.children) {
-        return keys.concat(getFlatMenuKeys(item.children));
-      }
-      return keys;
-    }, []);
+  menu.reduce((keys, item) => {
+    keys.push(item.path);
+    if (item.children) {
+      return keys.concat(getFlatMenuKeys(item.children));
+    }
+    return keys;
+  }, []);
 
 /**
  * Find all matched menu keys based on paths
@@ -43,11 +42,11 @@ export const getFlatMenuKeys = menu =>
  * @param  paths: [/abc, /abc/11, /abc/11/info]
  */
 export const getMeunMatchKeys = (flatMenuKeys, paths) =>
-  paths
-    .reduce((matchKeys, path) => (
-      matchKeys.concat(
-        flatMenuKeys.filter(item => pathToRegexp(item).test(path))
-    )), []);
+  paths.reduce(
+    (matchKeys, path) =>
+      matchKeys.concat(flatMenuKeys.filter(item => pathToRegexp(item).test(path))),
+    []
+  );
 
 export default class SiderMenu extends PureComponent {
   constructor(props) {
@@ -71,7 +70,10 @@ export default class SiderMenu extends PureComponent {
    * @param  props
    */
   getDefaultCollapsedSubMenus(props) {
-    const { location: { pathname } } = props || this.props;
+    const {
+      location: { pathname },
+    } =
+      props || this.props;
     return getMeunMatchKeys(this.flatMenuKeys, urlToList(pathname));
   }
   /**
@@ -160,7 +162,9 @@ export default class SiderMenu extends PureComponent {
   };
   // Get the currently selected menu
   getSelectedMenuKeys = () => {
-    const { location: { pathname } } = this.props;
+    const {
+      location: { pathname },
+    } = this.props;
     return getMeunMatchKeys(this.flatMenuKeys, urlToList(pathname));
   };
   // conversion Path
