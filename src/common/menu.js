@@ -1,7 +1,7 @@
-import { sysConfig } from 'yc';
+import { getMenu } from '../utils/sysConfig';
 import { isUrl } from '../utils/utils';
 
-const menuData = sysConfig.getMenu();
+const menuData = getMenu();
 
 function formatter(data, parentPath = '/', parentAuthority) {
   return data.map(item => {

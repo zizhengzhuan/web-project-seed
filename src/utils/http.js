@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import { sysConfig } from 'yc';
+import { getCfgByKey } from './sysConfig';
 import request from './request';
 
 let taskCfg = null;
@@ -37,7 +37,7 @@ function getFuncPath(path = '', params) {
 function getTaskServiceCfg(svn) {
   if (taskCfg === null) {
     taskCfg = new Map();
-    const taskServices = sysConfig.getCfgByKey('servicecfg');
+    const taskServices = getCfgByKey('servicecfg');
 
     const { proxy, service } = taskServices;
     if (!Array.isArray(proxy)) {
@@ -81,7 +81,13 @@ export function get({ svn = 'QUERY_SVR', path = '', data = {}, validate = true }
   });
 }
 
-export function post({ svn = 'QUERY_SVR', path = '', data = {}, validate = true, contentType = 'www' }) {
+export function post({
+  svn = 'QUERY_SVR',
+  path = '',
+  data = {},
+  validate = true,
+  contentType = 'www',
+}) {
   const url = getUrl({ svn, path });
   return request(url, {
     method: 'POST',
