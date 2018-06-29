@@ -1,7 +1,6 @@
 import '@babel/polyfill';
 import 'url-polyfill';
 import dva from 'dva';
-import { sysConfig } from 'yc';
 
 // user HashHistory
 // import createHistory from 'history/createHashHistory';
@@ -10,9 +9,6 @@ import createHistory from 'history/createBrowserHistory';
 import createLoading from 'dva-loading';
 import 'moment/locale/zh-cn';
 import './index.less';
-
-// 使用 browserHistory 时，需要将 sysConfig 的目录修改为以 / 开头
-sysConfig.setRoot('/');
 
 // 1. Initialize
 const app = dva({
