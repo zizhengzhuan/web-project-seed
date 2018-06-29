@@ -9,6 +9,11 @@
 
 ## 版本更新
 
+### 1.0.1 （2018-06-29）
+
++ [refactor] 将 src/index.js 中的 sysConfig 设置关闭，配置文件读取方法统一使用 utils/sysConfig
++ [feat] src/common/router.js，在 routerData 属性中新增 params 参数，用于携带 menu.js 中的 params 属性
+
 ### 1.0.0 （2018-06-22）
 
 + [refactor] 将 http 请求相关逻辑合并至 yc/http 之中，暂时依赖于 utils/request.js。同时保留 utils/http.js 用于过度，未来会被删除
