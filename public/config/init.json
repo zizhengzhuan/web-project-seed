@@ -7,14 +7,7 @@
     { "key": "servicecfg", "url": "config/taskServices.js", "loaded": true },
     { "key": "menu", "url": "config/menu.js", "loaded": true }
   ],
-  "onload": {
-    "main": [
-      { "toolKey": "INDEX", "name": "", "params": "" }
-    ],
-
-    "map": [
-    ]
-  },
+  "sys": "sys1",
   "default": {
     "searchType": "client",
     "baiduCityId": "218",
