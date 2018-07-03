@@ -5,7 +5,8 @@
   "cfgs": [
     { "key": "mapcfg", "url": "config/mapcfg.js", "loaded": true },
     { "key": "servicecfg", "url": "config/taskServices.js", "loaded": true },
-    { "key": "menu", "url": "config/menu.js", "loaded": true }
+    { "key": "menu", "url": "config/menu.js", "loaded": true },
+    { "key": "xxx/foo", "url": "xxx/config/foo.js", "loaded": true }
   ],
   "sys": "sys1",
   "default": {

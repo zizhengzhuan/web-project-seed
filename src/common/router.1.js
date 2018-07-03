@@ -15,28 +15,28 @@ const modelNotExisted = (app, model) =>
 const dynamicWrapper = (app, models, component) => {
   // () => require('module')
   // transformed by babel-plugin-dynamic-import-node-sync
-  // if (component.toString().indexOf('.then(') < 0) {
-  //   models.forEach(model => {
-  //     if (modelNotExisted(app, model)) {
-  //       // eslint-disable-next-line
-  //       app.model(require(`../models/${model}`).default);
-  //     }
-  //   });
-  //   return props => {
-  //     if (!routerDataCache) {
-  //       routerDataCache = getRouterData(app);
-  //     }
-  //     return createElement(component().default, {
-  //       ...props,
-  //       routerData: routerDataCache,
-  //     });
-  //   };
-  // }
+  if (component.toString().indexOf('.then(') < 0) {
+    models.forEach(model => {
+      if (modelNotExisted(app, model)) {
+        // eslint-disable-next-line
+        app.model(require(`../models/${model}`).default);
+      }
+    });
+    return props => {
+      if (!routerDataCache) {
+        routerDataCache = getRouterData(app);
+      }
+      return createElement(component().default, {
+        ...props,
+        routerData: routerDataCache,
+      });
+    };
+  }
   // () => import('module')
   return dynamic({
     app,
-    models: () => models.filter(model => modelNotExisted(app, model.path)).map(m => m.func()),
-    // models.map(m => m()),
+    models: () =>
+      models.filter(model => modelNotExisted(app, model)).map(m => import(`../models/${m}.js`)),
     // add routerData prop
     component: () => {
       if (!routerDataCache) {
@@ -70,39 +70,27 @@ function getFlatMenuData(menus) {
 export const getRouterData = app => {
   const routerConfig = {
     '/': {
-      component: dynamicWrapper(
-        app,
-        [
-          { func: () => import('../models/user'), path: '../models/user' },
-          { func: () => import('../models/login'), path: '../models/login' },
-        ],
-        () => import('../layouts/BasicLayout')
-      ),
+      component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
     '/exception/403': {
-      component: dynamicWrapper(app, [], () => import('../pages/Exception/403')),
+      component: dynamicWrapper(app, [], () => import('../routes/Exception/403')),
     },
     '/exception/404': {
-      component: dynamicWrapper(app, [], () => import('../pages/Exception/404')),
+      component: dynamicWrapper(app, [], () => import('../routes/Exception/404')),
     },
     '/exception/500': {
-      component: dynamicWrapper(app, [], () => import('../pages/Exception/500')),
+      component: dynamicWrapper(app, [], () => import('../routes/Exception/500')),
     },
     '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     },
     '/user/login': {
-      component: dynamicWrapper(
-        app,
-        [{ func: () => import('../models/login'), path: '../models/login' }],
-        () => import('../pages/User/Login')
-      ),
+      component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
     },
     '/blank': {
       component: dynamicWrapper(app, [], () => import('../layouts/BlankLayout')),
     },
     // {{start}}
-
     // {{end}}
   };
   // Get name from ./menu.js or just set it in the router data.

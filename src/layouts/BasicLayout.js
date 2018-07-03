@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { enquireScreen, unenquireScreen } from 'enquire-js';
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
-import NotFound from '../routes/Exception/404';
+import NotFound from '../pages/Exception/404';
 import { getRoutes, getTitle, getLogo } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';

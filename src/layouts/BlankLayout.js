@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { Route, Redirect, Switch } from 'dva/router';
 import { getRoutes, getTitle } from '../utils/utils';
-import NotFound from '../routes/Exception/404';
+import NotFound from '../pages/Exception/404';
 import { getMenuData } from '../common/menu';
 import Authorized from '../utils/Authorized';
 

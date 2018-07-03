@@ -1,0 +1,22 @@
+[
+  // {
+  //   "key": "/workflow/list",
+  //   "models": ["$path/models/bpmn/bpm"],
+  //   "component": "$path/Bpm"
+  // },
+  // {
+  //   "key": "/workflow/mgmt",
+  //   "models": ["$path/models/bpmn/bpm", "$path/models/bpmn/mgmt"],
+  //   "component": "$path/Bpm/Management"
+  // },
+  // {
+  //   "key": "/workflow/design/:id?",
+  //   "models": ["$path/models/bpmn/bpm"],
+  //   "component": "$path/Bpm/Design"
+  // },
+  // {
+  //   "key": "/workflow/12f",
+  //   "models": ["$path/models/bpmn/bpm"],
+  //   "component": "$path/Bpm/Design"
+  // }
+]

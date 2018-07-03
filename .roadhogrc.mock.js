@@ -1,5 +1,3 @@
-import mockjs from 'mockjs';
-import { getFakeChartData } from './mock/chart';
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
 
@@ -46,7 +44,6 @@ const proxy = {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
-  'GET /api/fake_chart_data': getFakeChartData,
   'POST /api/login/account': (req, res) => {
     const { password, userName, type } = req.body;
     if (password === '888888' && userName === 'admin') {
