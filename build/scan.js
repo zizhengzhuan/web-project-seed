@@ -68,26 +68,28 @@ function getProdcutionRouter() {
       return;
     }
     const stream = content.toString();
-    try {
-      const jsonObj = JSON.parse(stream.toString());
-      // 转换变标准字符串
-      const routerContents = jsonObj.map(item => {
-        const { key, models = [], component } = item;
-        const importModal = models.map(model => {
-          return `{func: () => import('${model}'), path: '${model}'}`;
+    if (stream.length > 0) {
+      try {
+        const jsonObj = JSON.parse(stream.toString());
+        // 转换变标准字符串
+        const routerContents = jsonObj.map(item => {
+          const { key, models = [], component } = item;
+          const importModal = models.map(model => {
+            return `{func: () => import('${model}'), path: '${model}'}`;
+          });
+          return `'${key}': {component: dynamicWrapper(app, [${importModal.join(
+            ','
+          )}], () => import('${component}'))}`;
         });
-        return `'${key}': {component: dynamicWrapper(app, [${importModal.join(
-          ','
-        )}], () => import('${component}'))}`;
-      });
-      const $path = getPath(file, 'pages', 'common');
-      let prodcutionRouterContent = routerContents
-        .join(',')
-        .replace(/\$path/g, `../${$path}`)
-        .replace(/\/\//g, `/`);
-      prodcutionRouterContents.push(prodcutionRouterContent);
-    } catch (err) {
-      console.error(err);
+        const $path = getPath(file, 'pages', 'common');
+        let prodcutionRouterContent = routerContents
+          .join(',')
+          .replace(/\$path/g, `../${$path}`)
+          .replace(/\/\//g, `/`);
+        prodcutionRouterContents.push(prodcutionRouterContent);
+      } catch (err) {
+        console.error(err);
+      }
     }
   });
   return prodcutionRouterContents.join(',');
