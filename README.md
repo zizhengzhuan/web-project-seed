@@ -9,6 +9,10 @@
 
 ## 版本更新
 
+### 1.1.0 （2018-07-04）
+
++ [feat] 目录升级改造，新增针对 router.json 的扫面功能
+
 ### 1.0.1 （2018-06-29）
 
 + [refactor] 将 src/index.js 中的 sysConfig 设置关闭，配置文件读取方法统一使用 utils/sysConfig
