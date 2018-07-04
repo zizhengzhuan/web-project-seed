@@ -1,7 +1,7 @@
 import { stringify } from 'qs';
 import { getCfgByKey } from './sysConfig';
 import request from './request';
-import { getToken } from '../utils/Authority';
+import { getToken } from '../utils/authority';
 
 const token = getToken();
 
