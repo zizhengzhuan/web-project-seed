@@ -18,16 +18,15 @@ export async function accountLogin(params) {
   return get({
     svn: 'OMS_SVR',
     path: 'user/login',
-    data: { password, loginname: userName, sys },
+    data: { password, loginName: userName, sys },
   });
 }
 
-export async function AccountLogout(params) {
-  const { password, userName } = params;
+export async function accountLogout() {
   return get({
     svn: 'OMS_SVR',
-    path: 'user/login',
-    data: { password, loginname: userName, sys },
+    path: 'user/logout',
+    data: { sys },
   });
 }
 

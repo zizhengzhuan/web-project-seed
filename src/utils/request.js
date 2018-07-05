@@ -2,7 +2,6 @@ import fetch from 'dva/fetch';
 import { notification, message } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
-import { setToken } from './authority';
 
 const msdCodeMessage = {
   '-1': '',
@@ -12,9 +11,8 @@ const defaultErrorText = '错误提示信息为空';
 
 const requestError = {
   validate: res => {
-    if (res.msgCode) {
+    if (typeof res.msgCode === 'number') {
       if (res.msgCode === 401) {
-        setToken();
         const urlParams = new URL(window.location.href);
         window.history.replaceState(null, 'login', urlParams.href);
         return;

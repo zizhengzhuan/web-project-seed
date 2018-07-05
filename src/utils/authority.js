@@ -18,6 +18,6 @@ export function getToken() {
   return localStorage.getItem(tokenNameSpace) || '';
 }
 
-export function setToken(token) {
+export function setToken(token = '') {
   return localStorage.setItem(tokenNameSpace, token);
 }

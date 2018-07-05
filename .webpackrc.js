@@ -7,8 +7,8 @@ export default {
       'import',
       {
         libraryName: 'yd-gis',
-        libraryDirectory: 'es',
         style: true,
+        libraryDirectory: 'es',
         camel2DashComponentName: false,
       },
       'yd-gis-import',
@@ -16,7 +16,7 @@ export default {
   ],
   proxy: {
     '/proxyOms': {
-      target: 'http://192.168.8.35:8080/',
+      target: 'http://192.168.8.183:8080/',
       changeOrigin: true,
       pathRewrite: { '^/proxyOms': '' },
     },

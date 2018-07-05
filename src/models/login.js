@@ -51,7 +51,6 @@ export default {
       }
     },
   },
-
   reducers: {
     changeLoginStatus(state, { payload }) {
       setToken(payload.currentAuthority);
@@ -60,6 +59,15 @@ export default {
         status: payload.status,
         type: payload.type,
       };
+    },
+  },
+  subscriptions: {
+    setup({ history }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/user/login') {
+          setToken();
+        }
+      });
     },
   },
 };

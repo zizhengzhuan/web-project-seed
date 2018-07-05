@@ -9,6 +9,10 @@
 
 ## 版本更新
 
+### 1.2.0 （2018-07-05）
+
++ [feat] 登录对接新版 oms 服务，以及配置相关 mock 数据。如需切换真实 oms，需将 taskServices.js 中的 api 改为 proxyOms，proxyOms 默认查询的为 183 的 oms 服务
+
 ### 1.1.0 （2018-07-04）
 
 + [feat] 目录升级改造，新增针对 router.json 的扫面功能
