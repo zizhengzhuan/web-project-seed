@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent } from '../services/user';
+import { queryCurrent } from '../services/user';
 
 export default {
   namespace: 'user',
@@ -9,13 +9,6 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(queryUsers);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-    },
     *fetchCurrent(_, { call, put }) {
       const res = yield call(queryCurrent);
       if (res) {
@@ -36,6 +29,8 @@ export default {
         yield put({
           type: 'saveCurrentUser',
           payload: {
+            name: '游客',
+            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
             notifyCount: 0,
           },
         });
