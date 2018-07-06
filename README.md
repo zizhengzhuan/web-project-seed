@@ -13,7 +13,7 @@
 
 + [fix] 修复 yc/http 中的某些异常，yc 依赖包升级
 + [feat] init.json 新增 home 参数，用于指定网站首页，如果不提供，则默认使用 router.js 当中的第一个非根目录的功能作为首页（即 403 页面）
-+ [feat] 新增菜单权限控制，菜单由服务数据决定，/public/config/menu.js 的配置即将作废，不再推荐使用。如果需要本地调试，可以通过将 /public/config/mneu.js 的内容迁移至 /mock/login.js 当中的 menu 节点来完成过渡
++ [feat] 新增菜单权限控制，菜单由服务数据决定，/public/config/menu.js 的配置即将作废，不再推荐使用。如果需要本地调试，可以通过将 /public/config/menu.js 的内容迁移至 /mock/login.js 当中的 menu 节点来完成过渡
 
 ### 1.2.0 （2018-07-05）
 
