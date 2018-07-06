@@ -2,12 +2,12 @@ import { parse } from 'url';
 
 const menu = [
   {
-    path: 'workflow',
+    path: '/workflow',
     image: null,
     gid: '4',
     children: [
       {
-        path: 'workflow/mgmt',
+        path: '/workflow/mgmt',
         image: '',
         gid: '6',
         name: '流程设计',
@@ -19,7 +19,7 @@ const menu = [
         sys: 'sys1',
       },
       {
-        path: 'workflow/list',
+        path: '/workflow/list',
         image: '',
         gid: '5',
         name: '流程管理',
@@ -40,12 +40,12 @@ const menu = [
     sys: 'sys1',
   },
   {
-    path: 'maintain',
+    path: '/maintain',
     image: '',
     gid: '9',
     children: [
       {
-        path: 'maintain/enumType',
+        path: '/maintain/enumType',
         image: null,
         gid: '10',
         name: '枚举值维护',
@@ -57,7 +57,7 @@ const menu = [
         sys: 'sys1',
       },
       {
-        path: 'maintain/formType',
+        path: '/maintain/formType',
         image: null,
         gid: '11',
         name: '表单类型维护',
@@ -78,7 +78,7 @@ const menu = [
     sys: 'sys1',
   },
   {
-    path: 'form/manager',
+    path: '/form/manager',
     image: '',
     gid: '8',
     name: '表单管理',
@@ -90,12 +90,12 @@ const menu = [
     sys: 'sys1',
   },
   {
-    path: 'oms',
+    path: '/oms',
     image: '',
     gid: '1',
     children: [
       {
-        path: 'oms/manager',
+        path: '/oms/manager',
         image: '',
         gid: '2',
         name: '组织机构',
@@ -107,7 +107,7 @@ const menu = [
         sys: 'sys1',
       },
       {
-        path: 'oms/menuManager',
+        path: '/oms/menuManager',
         image: '',
         gid: '3',
         name: '菜单管理',
