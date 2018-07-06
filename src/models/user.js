@@ -6,6 +6,7 @@ export default {
   state: {
     list: [],
     currentUser: {},
+    menus: [],
   },
 
   effects: {
@@ -14,16 +15,23 @@ export default {
       if (res) {
         const { data } = res;
         const {
-          user: { gid: userid, username: name },
+          user: { username: name },
+          menu: menus,
         } = data;
         yield put({
           type: 'saveCurrentUser',
           payload: {
             name,
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-            userid,
             notifyCount: 12,
+            // 自用属性
+            uid: data.user.usid || data.user.gid,
+            ...data.user,
           },
+        });
+        yield put({
+          type: 'saveMenus',
+          payload: menus,
         });
       } else {
         yield put({
@@ -34,21 +42,25 @@ export default {
             notifyCount: 0,
           },
         });
+        yield put({
+          type: 'saveMenus',
+          payload: [],
+        });
       }
     },
   },
 
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        list: action.payload,
-      };
-    },
     saveCurrentUser(state, action) {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    },
+    saveMenus(state, { payload }) {
+      return {
+        ...state,
+        menus: payload,
       };
     },
     changeNotifyCount(state, action) {

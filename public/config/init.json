@@ -9,6 +9,7 @@
     { "key": "xxx/foo", "url": "xxx/config/foo.js", "loaded": true }
   ],
   "sys": "sys1",
+  "home": "/workflow/mgmt",
   "default": {
     "searchType": "client",
     "baiduCityId": "218",

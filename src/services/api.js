@@ -14,11 +14,11 @@ if (!sys) {
 }
 
 export async function accountLogin(params) {
-  const { password, userName } = params;
+  const { password, loginName } = params;
   return get({
     svn: 'OMS_SVR',
     path: 'user/login',
-    data: { password, loginName: userName, sys },
+    data: { password, loginName, sys },
   });
 }
 
