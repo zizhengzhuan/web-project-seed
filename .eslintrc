@@ -69,7 +69,8 @@
     "no-unused-vars": [1],
     "prefer-destructuring": [1],
     "no-plusplus": [0],
-    "react/no-find-dom-node": [1]
+    "react/no-find-dom-node": [1],
+    "no-script-url": [1]
   },
   "parserOptions": {
     "ecmaFeatures": {
