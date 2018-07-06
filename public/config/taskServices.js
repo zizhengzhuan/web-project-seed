@@ -19,8 +19,8 @@ var taskServices = {
     {
       name: 'OMS_SVR',
       description: '运维服务',
-      // url: '/api/CityServer/rest/omsService',
-      url: '/proxyOms/CityServer/rest/omsService',
+      url: '/api/CityServer/rest/omsService',
+      // url: '/proxyOms/CityServer/rest/omsService',
       type: 'net',
       for: '',
       proxy: 'a'
