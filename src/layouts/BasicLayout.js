@@ -166,7 +166,7 @@ class BasicLayout extends React.PureComponent {
     }
     if (key === 'logout') {
       this.props.dispatch({
-        type: 'login/logout',
+        type: 'login/logoutNoFetch',
       });
     }
   };

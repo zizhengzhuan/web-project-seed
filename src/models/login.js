@@ -25,35 +25,40 @@ export default {
         yield put({ type: 'changeLoginStatus', payload: { status: 'error', type: 'account' } });
       }
     },
-    *logout(_, { call, put, select }) {
+    *logout(_, { call, put }) {
       const res = yield call(accountLogout);
       if (!res) {
         message.warning('登出失败');
       } else {
-        try {
-          // get location pathname
-          const urlParams = new URL(window.location.href);
-          const pathname = yield select(state => state.routing.location.pathname);
-          // add the parameters in the url
-          urlParams.searchParams.set('redirect', pathname);
-          window.history.replaceState(null, 'login', urlParams.href);
-        } finally {
-          yield put({
-            type: 'changeLoginStatus',
-            payload: {
-              status: false,
-              currentAuthority: 'guest',
-            },
-          });
-          reloadAuthorized();
-          yield put(routerRedux.push('/user/login'));
-        }
+        yield put({
+          type: 'logoutNoFetch',
+        });
+      }
+    },
+    *logoutNoFetch(_, { put, select }) {
+      try {
+        // get location pathname
+        const urlParams = new URL(window.location.href);
+        const pathname = yield select(state => state.routing.location.pathname);
+        // add the parameters in the url
+        urlParams.searchParams.set('redirect', pathname);
+        window.history.replaceState(null, 'login', urlParams.href);
+      } finally {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            status: false,
+            currentToken: '',
+          },
+        });
+        reloadAuthorized();
+        yield put(routerRedux.push('/user/login'));
       }
     },
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setToken(payload.currentAuthority);
+      setToken(payload.currentToken);
       return {
         ...state,
         status: payload.status,

@@ -13,8 +13,10 @@ const requestError = {
   validate: res => {
     if (typeof res.msgCode === 'number') {
       if (res.msgCode === 401) {
-        const urlParams = new URL(window.location.href);
-        window.history.replaceState(null, 'login', urlParams.href);
+        const { dispatch } = store;
+        dispatch({
+          type: 'login/logoutNoFetch',
+        });
         return;
       }
       return res.msgCode !== 0;
@@ -182,7 +184,7 @@ function request(url, options) {
       const status = e.name;
       if (status === 401) {
         dispatch({
-          type: 'login/logout',
+          type: 'login/logoutNoFetch',
         });
         return;
       }
