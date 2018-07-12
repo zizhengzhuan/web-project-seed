@@ -21,4 +21,15 @@ yarn.lock
 package-lock.json
 *bak
 jsconfig.json
-.vscode
+.vscode/
+
+# svn
+.svn
+
+# Development Directory
+/src/pages
+!/src/pages/Exception/
+!/src/pages/User/
+
+/public/*/
+!/public/config

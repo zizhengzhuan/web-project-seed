@@ -101,9 +101,11 @@ export const getRouterData = app => {
     '/blank': {
       component: dynamicWrapper(app, [], () => import('../layouts/BlankLayout')),
     },
+    // #region code block
     // {{start}}
 
     // {{end}}
+    // #endregion
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
