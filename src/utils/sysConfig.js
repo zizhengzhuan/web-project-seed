@@ -1,9 +1,5 @@
 import { sysConfig } from 'yc';
-
-console.log('a');
-console.log('a');
-console.log('a');
-sysConfig.setRoot('/');
+import { message } from 'antd';
 
 export function getMenu() {
   return getCfgByKey('menu');
@@ -15,4 +11,18 @@ export function getInit() {
 
 export function getCfgByKey(key) {
   return sysConfig.getCfgByKey(key, '/');
+}
+
+export function getSys() {
+  const iniConfig = getInit();
+  if (!iniConfig) {
+    message.warning('init.json 配置文件异常');
+    return '';
+  }
+  const { sys } = iniConfig;
+  if (!sys) {
+    message.warning('sys 节点丢失');
+    return '';
+  }
+  return sys;
 }

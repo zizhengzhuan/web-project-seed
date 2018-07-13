@@ -3,13 +3,12 @@
   "logo": "favicon.ico",
   "message": "",
   "cfgs": [
-    { "key": "mapcfg", "url": "config/mapcfg.js", "loaded": true },
+    { "key": "menu", "url": "config/menu.js", "loaded": false },
     { "key": "servicecfg", "url": "config/taskServices.js", "loaded": true },
-    { "key": "menu", "url": "config/menu.js", "loaded": true },
     { "key": "xxx/foo", "url": "xxx/config/foo.js", "loaded": true }
   ],
   "sys": "sys1",
-  "home": "/workflow/mgmt",
+  "home": "/home",
   "default": {
     "searchType": "client",
     "baiduCityId": "218",

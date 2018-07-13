@@ -10,7 +10,7 @@ import { enquireScreen, unenquireScreen } from 'enquire-js';
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../pages/Exception/404';
-import { getInit } from '../utils/sysConfig';
+import { getInit, getMenu } from '../utils/sysConfig';
 import { getRoutes, getTitle, getLogo } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
@@ -19,6 +19,25 @@ const { Content, Header } = Layout;
 const { AuthorizedRoute, check } = Authorized;
 
 const init = getInit();
+
+/**
+ * 根据菜单取得重定向地址.
+ */
+const redirectData = [];
+const getRedirect = item => {
+  if (item && item.children) {
+    if (item.children[0] && item.children[0].path) {
+      redirectData.push({
+        from: `${item.path}`,
+        to: `${item.children[0].path}`,
+      });
+      item.children.forEach(children => {
+        getRedirect(children);
+      });
+    }
+  }
+};
+getMenuData().forEach(getRedirect);
 
 /**
  * 获取面包屑映射
@@ -102,28 +121,6 @@ class BasicLayout extends React.PureComponent {
     }
     return title;
   }
-  getRedirectData() {
-    const { menus } = this.props;
-    /**
-     * 根据菜单取得重定向地址.
-     */
-    const redirectData = [];
-    const getRedirect = item => {
-      if (item && item.children) {
-        if (item.children[0] && item.children[0].path) {
-          redirectData.push({
-            from: `${item.path}`,
-            to: `${item.children[0].path}`,
-          });
-          item.children.forEach(children => {
-            getRedirect(children);
-          });
-        }
-      }
-    };
-    menus.forEach(getRedirect);
-    return redirectData;
-  }
   getBashRedirect = () => {
     // According to the url parameter to redirect
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
@@ -180,7 +177,6 @@ class BasicLayout extends React.PureComponent {
   render() {
     const {
       currentUser,
-      menus,
       collapsed,
       fetchingNotices,
       notices,
@@ -189,25 +185,22 @@ class BasicLayout extends React.PureComponent {
       location,
     } = this.props;
     const bashRedirect = this.getBashRedirect();
-    const redirectData = this.getRedirectData();
 
     const layout = (
       <Layout>
-        {menus.length > 0 && (
-          <SiderMenu
-            logo={getLogo()}
-            title={getTitle()}
-            // 不带Authorized参数的情况下如果没有权限,会强制跳到403界面
-            // If you do not have the Authorized parameter
-            // you will be forced to jump to the 403 interface without permission
-            Authorized={Authorized}
-            menuData={menus}
-            collapsed={collapsed}
-            location={location}
-            isMobile={this.state.isMobile}
-            onCollapse={this.handleMenuCollapse}
-          />
-        )}
+        <SiderMenu
+          logo={getLogo()}
+          title={getTitle()}
+          // 不带Authorized参数的情况下如果没有权限,会强制跳到403界面
+          // If you do not have the Authorized parameter
+          // you will be forced to jump to the 403 interface without permission
+          Authorized={Authorized}
+          menuData={getMenuData()}
+          collapsed={collapsed}
+          location={location}
+          isMobile={this.state.isMobile}
+          onCollapse={this.handleMenuCollapse}
+        />
         <Layout>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
@@ -223,7 +216,7 @@ class BasicLayout extends React.PureComponent {
               onNoticeVisibleChange={this.handleNoticeVisibleChange}
             />
           </Header>
-          <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+          <Content style={{ margin: '24px', height: '100%' }}>
             <Switch>
               {redirectData.map(item => (
                 <Redirect key={item.from} exact from={item.from} to={item.to} />
@@ -258,7 +251,6 @@ class BasicLayout extends React.PureComponent {
 
 export default connect(({ user, global, loading }) => ({
   currentUser: user.currentUser,
-  menus: user.menus,
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,

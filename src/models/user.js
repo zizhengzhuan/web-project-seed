@@ -6,7 +6,6 @@ export default {
   state: {
     list: [],
     currentUser: {},
-    menus: [],
   },
 
   effects: {
@@ -16,7 +15,6 @@ export default {
         const { data } = res;
         const {
           user: { username: name },
-          menu: menus,
         } = data;
         yield put({
           type: 'saveCurrentUser',
@@ -29,10 +27,6 @@ export default {
             ...data.user,
           },
         });
-        yield put({
-          type: 'saveMenus',
-          payload: menus,
-        });
       } else {
         yield put({
           type: 'saveCurrentUser',
@@ -41,10 +35,6 @@ export default {
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
             notifyCount: 0,
           },
-        });
-        yield put({
-          type: 'saveMenus',
-          payload: [],
         });
       }
     },
@@ -55,12 +45,6 @@ export default {
       return {
         ...state,
         currentUser: action.payload,
-      };
-    },
-    saveMenus(state, { payload }) {
-      return {
-        ...state,
-        menus: payload,
       };
     },
     changeNotifyCount(state, action) {
