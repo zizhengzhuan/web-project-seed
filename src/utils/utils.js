@@ -81,73 +81,24 @@ export function getLogo() {
   return '';
 }
 
-let taskCfg = null;
+export function getScrollbarWidth() {
+  let odiv = document.getElementById('scroll-width-zone');
 
-/**
- * 获取服务方法路径
- * @param {string} path rest 服务方法路径
- * @returns {string} url 服务方法地址
- * @ignore
- */
-function getFuncPath(path = '', params) {
-  if (path.length === 0) {
-    throw new Error('path 参数不允许为空');
+  if (!odiv) {
+    odiv = document.createElement('div');
+    odiv.id = 'scroll-width-zone';
+    const styles = {
+      width: '100px',
+      height: '100px',
+      overflowY: 'scroll',
+    };
+    for (const [key, value] of Object.entries(styles)) {
+      odiv.style[key] = value;
+    }
+    document.body.appendChild(odiv);
   }
 
-  let nextPath = path.indexOf('/') === 0 ? path : `/${path}`;
-  if (params) {
-    if (nextPath.indexOf('?') === -1) {
-      nextPath += '?';
-    }
-    // 参数序列化
-    const nextPrams = {};
-    for (const [key, value] of Object.entries(params)) {
-      if (typeof value === 'object') {
-        nextPrams[key] = JSON.stringify(value);
-      } else {
-        nextPrams[key] = value;
-      }
-    }
-    nextPath += stringify(nextPrams);
-  }
-  return nextPath;
-}
-
-export function getTaskServiceCfg(svn) {
-  if (taskCfg === null) {
-    taskCfg = new Map();
-    const taskServices = sysConfig.getCfgByKey('servicecfg');
-
-    const { proxy, service } = taskServices;
-    if (!Array.isArray(proxy)) {
-      throw new Error('参数 proxy 异常，只允许为数组');
-    }
-    if (!Array.isArray(service)) {
-      throw new Error('参数 service 异常，只允许为数组');
-    }
-    service.forEach(src => {
-      const nextSrc = { ...src };
-      if (nextSrc.proxy) {
-        for (let i = 0; i < proxy.length; i++) {
-          const pry = proxy[i];
-          if (pry.status !== '0' && pry.name === nextSrc.proxy) {
-            const { url } = nextSrc;
-            nextSrc.url = `${pry.url}?${url}`;
-            nextSrc.originalUrl = url;
-            break;
-          }
-        }
-      }
-
-      taskCfg.set(src.name, nextSrc);
-    });
-  }
-  return taskCfg.get(svn);
-}
-
-export function getUrl({ svn, path, params = null, isProxy = true }) {
-  const currentCfg = getTaskServiceCfg(svn);
-  let url = isProxy ? currentCfg.url : currentCfg.originalUrl;
-  url += getFuncPath(path, params);
-  return url;
+  const scrollbarWidth = odiv.offsetWidth - odiv.clientWidth;
+  // odiv.remove();
+  return scrollbarWidth;
 }

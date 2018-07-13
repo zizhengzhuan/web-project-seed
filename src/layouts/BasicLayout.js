@@ -11,7 +11,7 @@ import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../pages/Exception/404';
 import { getInit, getMenu } from '../utils/sysConfig';
-import { getRoutes, getTitle, getLogo } from '../utils/utils';
+import { getRoutes, getTitle, getLogo, getScrollbarWidth } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
 
@@ -91,6 +91,7 @@ class BasicLayout extends React.PureComponent {
   };
   state = {
     isMobile,
+    scrollWidth: 17,
   };
   getChildContext() {
     const { location, routerData } = this.props;
@@ -104,6 +105,10 @@ class BasicLayout extends React.PureComponent {
       this.setState({
         isMobile: mobile,
       });
+    });
+    // eslint-disable-next-line
+    this.setState({
+      scrollWidth: getScrollbarWidth(),
     });
     this.props.dispatch({
       type: 'user/fetchCurrent',
@@ -199,6 +204,7 @@ class BasicLayout extends React.PureComponent {
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}
+          scrollWidth={this.state.scrollWidth}
           onCollapse={this.handleMenuCollapse}
         />
         <Layout>
