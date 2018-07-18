@@ -88,6 +88,9 @@ export function getScrollbarWidth() {
     odiv = document.createElement('div');
     odiv.id = 'scroll-width-zone';
     const styles = {
+      position: 'absolute',
+      top: '1000px',
+      left: '1000px',
       width: '100px',
       height: '100px',
       overflowY: 'scroll',
