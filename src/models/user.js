@@ -1,4 +1,4 @@
-import { queryCurrent } from '../services/user';
+import { queryCurrent } from '../services/api';
 
 export default {
   namespace: 'user',
