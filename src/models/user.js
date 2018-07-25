@@ -28,14 +28,18 @@ export default {
           },
         });
       } else {
+        // 获取用户信息失败，等价于登录异常
         yield put({
-          type: 'saveCurrentUser',
-          payload: {
-            name: '游客',
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-            notifyCount: 0,
-          },
+          type: 'login/logoutNoFetch',
         });
+        // yield put({
+        //   type: 'saveCurrentUser',
+        //   payload: {
+        //     name: '游客',
+        //     avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        //     notifyCount: 0,
+        //   },
+        // });
       }
     },
   },
