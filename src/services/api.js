@@ -90,7 +90,9 @@ async function logoutV3() {
  */
 async function getUserInfoV2() {
   const username = getItem('username');
-  if (typeof username !== 'string' || username.length === 0) {
+  console.log('username');
+  console.log(username);
+  if (typeof username !== 'string' || (typeof username === 'string' && username.length === 0)) {
     return null;
   }
   const res = await get({
@@ -165,7 +167,7 @@ export function getUserInfoSync() {
  */
 export function getUserInfoSyncV2() {
   const username = getItem('username');
-  if (typeof username !== 'string' || (typeof username === 'string' || username.length === 0)) {
+  if (typeof username !== 'string' || (typeof username === 'string' && username.length === 0)) {
     return null;
   }
   const url = getUrl({
