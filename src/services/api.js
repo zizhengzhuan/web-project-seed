@@ -45,7 +45,7 @@ async function loginV2(params) {
     path: 'login',
     data: { password, username: userName, sys },
   });
-  if (res.isSuccess) {
+  if (res && res.isSuccess) {
     setItem('username', res.user.username);
     res.data = {
       token: '',
@@ -98,7 +98,7 @@ async function getUserInfoV2() {
     path: 'getUserInfo',
     data: { username, sys },
   });
-  if (res.isSuccess) {
+  if (res && res.isSuccess) {
     return {
       data: {
         user: res.user,
@@ -165,6 +165,9 @@ export function getUserInfoSync() {
  */
 export function getUserInfoSyncV2() {
   const username = getItem('username');
+  if (typeof username !== 'string' || (typeof username === 'string' || username.length === 0)) {
+    return null;
+  }
   const url = getUrl({
     svn: 'OMS_SVR',
     path: 'getUserInfo',
