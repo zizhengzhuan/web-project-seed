@@ -10,7 +10,7 @@ import { enquireScreen, unenquireScreen } from 'enquire-js';
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../pages/Exception/404';
-import { getInit, getMenu } from '../utils/sysConfig';
+import { getInit } from '../utils/sysConfig';
 import { getRoutes, getTitle, getLogo, getScrollbarWidth } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
@@ -89,10 +89,19 @@ class BasicLayout extends React.PureComponent {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
   };
-  state = {
-    isMobile,
-    scrollWidth: 17,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMobile,
+      scrollWidth: 17,
+    };
+    if (getMenuData().length === 0) {
+      props.dispatch({
+        type: 'login/logoutNoFetch',
+      });
+    }
+  }
   getChildContext() {
     const { location, routerData } = this.props;
     return {
