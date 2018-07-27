@@ -19,9 +19,15 @@ var taskServices = {
     {
       name: 'OMS_SVR',
       description: '运维服务',
-      url: '/api/CityServer/rest/omsService',
+      //////////////////////////对应 oms 3.0 相关配置//////////////////////////
+      // url: '/api/CityServer/rest/omsService',
       // url: '/proxyOms/CityServer/rest/omsService',
-      type: 'net',
+      ///////////////////////////////////////////////////////////////////////
+      //////////////////////////对应 oms 2.0 相关配置//////////////////////////
+      url: '/api/ServiceEngine/rest/userService',
+      // url: '/proxyOms/ServiceEngine/rest/userService',
+      ///////////////////////////////////////////////////////////////////////
+      type: '',
       for: '',
       proxy: 'a'
     }
