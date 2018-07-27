@@ -89,10 +89,19 @@ class BasicLayout extends React.PureComponent {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
   };
-  state = {
-    isMobile,
-    scrollWidth: 17,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isMobile,
+      scrollWidth: 17,
+    };
+    if (getMenuData().length === 0) {
+      props.dispatch({
+        type: 'login/logoutNoFetch',
+      });
+    }
+  }
   getChildContext() {
     const { location, routerData } = this.props;
     return {
