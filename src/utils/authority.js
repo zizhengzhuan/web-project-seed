@@ -23,6 +23,12 @@ export function setToken(token = '') {
   return localStorage.setItem(tokenNameSpace, token);
 }
 
+/**
+ * 设置 localStorage 中所存储键值对
+ * @param {string} key 键值对中的键
+ * @param {string} value 键值对中的值
+ * @returns void
+ */
 export function setItem(key, value) {
   const str = localStorage.getItem(storeNameSpace) || '';
   let store = {};
@@ -38,6 +44,11 @@ export function setItem(key, value) {
   localStorage.setItem(storeNameSpace, JSON.stringify(store));
 }
 
+/**
+ * 获取 localStorage 中所存储键值对中的值
+ * @param {string} key 键值对中的键
+ * @returns {string|object|array}
+ */
 export function getItem(key) {
   const str = localStorage.getItem(storeNameSpace) || '';
   try {
@@ -50,6 +61,17 @@ export function getItem(key) {
   return '';
 }
 
+/**
+ * 清除 localStorage 中所存储键值对
+ */
 export function clearItem() {
   localStorage.setItem(storeNameSpace, '');
+}
+
+/**
+ * 清除所有
+ */
+export function clear() {
+  clearItem();
+  setToken();
 }

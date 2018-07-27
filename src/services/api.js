@@ -1,6 +1,6 @@
 import { http } from 'yc';
 import request from '../utils/request';
-import { getSys, getInit, getCfgByKey } from '../utils/sysConfig';
+import { getSys, getCfgByKey } from '../utils/sysConfig';
 import { getToken, getItem, setItem } from '../utils/authority';
 
 const {
@@ -10,7 +10,12 @@ const {
 } = http;
 const sys = getSys();
 
-function getOmsVersion() {
+let omsVersion = -1;
+
+export function getOmsVersion() {
+  if (omsVersion !== -1) {
+    return omsVersion;
+  }
   const taskServices = getCfgByKey('servicecfg');
   const tmp = taskServices.service.filter(item => item.name === 'OMS_SVR');
   if (tmp.length !== 1) {
@@ -18,16 +23,15 @@ function getOmsVersion() {
   }
   const omsService = tmp[0].url;
   if (omsService.indexOf('userService') > -1) {
-    return 2;
-  }
-  if (omsService.indexOf('us') > -1) {
+    omsVersion = 2;
+  } else if (omsService.indexOf('us') > -1) {
     console.log('暂不支持 1.0 版 oms');
-    return 1;
+    omsVersion = 1;
+  } else {
+    omsVersion = 3;
   }
-  return 3;
+  return omsVersion;
 }
-
-const omsVersion = getOmsVersion();
 
 /**
  * 针对 oms 2.1 版本的登陆服务
@@ -44,7 +48,7 @@ async function loginV2(params) {
   if (res.isSuccess) {
     setItem('username', res.user.username);
     res.data = {
-      token: 'IAmToken',
+      token: '',
     };
     return res;
   }
@@ -86,6 +90,9 @@ async function logoutV3() {
  */
 async function getUserInfoV2() {
   const username = getItem('username');
+  if (typeof username !== 'string' || username.length === 0) {
+    return null;
+  }
   const res = await get({
     svn: 'OMS_SVR',
     path: 'getUserInfo',
@@ -114,30 +121,27 @@ export async function queryNotices() {
 }
 
 export async function accountLogin(params) {
-  if (omsVersion === 2) {
+  if (getOmsVersion() === 2) {
     return loginV2(params);
   }
   return loginV3(params);
 }
 
 export async function accountLogout() {
-  if (omsVersion === 2) {
+  if (getOmsVersion() === 2) {
     return logoutV2();
   }
   return logoutV3();
 }
 
 export async function queryCurrent() {
-  if (omsVersion === 2) {
+  if (getOmsVersion() === 2) {
     return getUserInfoV2();
   }
   return getUserInfoV3();
 }
 
 export function getUserInfoSync() {
-  if (omsVersion === 2) {
-    return null;
-  }
   const token = getToken();
   const url = getUrl({
     svn: 'OMS_SVR',
@@ -147,6 +151,25 @@ export function getUserInfoSync() {
     sys,
     token,
   });
+  try {
+    const res = JSON.parse(resultStr);
+    return res;
+  } catch (err) {
+    console.error(err);
+  }
+  return null;
+}
+
+/**
+ * 对接 oms 2.0 版本
+ */
+export function getUserInfoSyncV2() {
+  const username = getItem('username');
+  const url = getUrl({
+    svn: 'OMS_SVR',
+    path: 'getUserInfo',
+  });
+  const resultStr = get1(url, { username, sys });
   try {
     const res = JSON.parse(resultStr);
     return res;

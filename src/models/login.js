@@ -1,7 +1,8 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { accountLogin, accountLogout } from '../services/api';
-import { setToken } from '../utils/authority';
+import { clearMenuData } from '../common/menu';
+import { setToken, clear } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
 export default {
@@ -70,7 +71,8 @@ export default {
     setup({ history }) {
       return history.listen(({ pathname }) => {
         if (pathname === '/user/login') {
-          setToken();
+          clear();
+          clearMenuData();
         }
       });
     },
