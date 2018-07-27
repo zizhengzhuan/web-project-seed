@@ -35,7 +35,7 @@ export const getMenuData = () => {
   const omsVersion = getOmsVersion();
   if (omsVersion === 3) {
     const res = getUserInfoSync();
-    if (res) {
+    if (res && res.data) {
       menuData = res.data.menu;
     } else {
       menuData = [];
