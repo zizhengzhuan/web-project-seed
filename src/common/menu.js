@@ -45,7 +45,7 @@ export const getMenuData = () => {
       throw new Error('在 oms 2.0 版本下，需要启动本地 menu.js 配置');
     }
     const res = getUserInfoSyncV2();
-    if (res.isSuccess) {
+    if (res && res.isSuccess) {
       const { menus } = res;
       const tmpMenus = [];
 

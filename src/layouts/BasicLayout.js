@@ -10,7 +10,7 @@ import { enquireScreen, unenquireScreen } from 'enquire-js';
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../pages/Exception/404';
-import { getInit, getMenu } from '../utils/sysConfig';
+import { getInit } from '../utils/sysConfig';
 import { getRoutes, getTitle, getLogo, getScrollbarWidth } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
@@ -130,6 +130,7 @@ class BasicLayout extends React.PureComponent {
     // According to the url parameter to redirect
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
     const urlParams = new URL(window.location.href);
+    const menuData = getMenuData();
 
     const redirect = urlParams.searchParams.get('redirect');
     // Remove the parameters in the url
@@ -138,6 +139,8 @@ class BasicLayout extends React.PureComponent {
       window.history.replaceState(null, 'redirect', urlParams.href);
     } else if (init && init.home && init.home.length > 0) {
       return init.home;
+    } else if (menuData.length > 0) {
+      return menuData[0].path;
     } else {
       const { routerData } = this.props;
       // get the first authorized route path in routerData
