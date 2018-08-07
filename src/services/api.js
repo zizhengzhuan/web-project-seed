@@ -119,7 +119,7 @@ async function getUserInfoV3() {
 }
 
 export async function queryNotices() {
-  return request('/api/notices');
+  return request('/mock/notices');
 }
 
 export async function accountLogin(params) {

@@ -8,13 +8,13 @@ const apiurl = 'http://192.168.1.204:8800';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
-  'GET /api/CityServer/rest/omsService/user/login': login,
-  'GET /api/CityServer/rest/omsService/user/logout': logout,
-  'GET /api/CityServer/rest/omsService/user/getUserInfoByToken': getUserInfoByToken,
-  'GET /api/ServiceEngine/rest/userService/login': loginV2,
-  'GET /api/ServiceEngine/rest/userService/getUserInfo': getUserInfo,
+  'GET /mock/CityServer/rest/omsService/user/login': login,
+  'GET /mock/CityServer/rest/omsService/user/logout': logout,
+  'GET /mock/CityServer/rest/omsService/user/getUserInfoByToken': getUserInfoByToken,
+  'GET /mock/ServiceEngine/rest/userService/login': loginV2,
+  'GET /mock/ServiceEngine/rest/userService/getUserInfo': getUserInfo,
 
-  'GET /api/notices': getNotices,
+  'GET /mock/notices': getNotices,
 };
 
 export default (noProxy
