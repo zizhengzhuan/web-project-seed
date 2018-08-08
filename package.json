@@ -80,9 +80,6 @@
     "yc": "^2.5.7",
     "yd": "^2.12.4"
   },
-  "optionalDependencies": {
-    "puppeteer": "^1.1.1"
-  },
   "lint-staged": {
     "**/*.{js,jsx,less}": [
       "prettier --write",
