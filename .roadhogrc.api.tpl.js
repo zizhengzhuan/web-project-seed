@@ -126,12 +126,30 @@ export default function request(url, params = {}) {
           if (code >= 200 && code < 300) {
             return tempRes;
           }
+          const { dispatch } = store;
           const errortext = codeMessage[code];
           notification.error({
             message: `请求错误 ${code}: ${url}`,
             description: errortext,
           });
-          return tempRes;
+          if (code === 401) {
+            dispatch({
+              type: 'login/logout',
+            });
+            return;
+          }
+          if (code === 403) {
+            dispatch(routerRedux.push('/exception/403'));
+            return;
+          }
+          if (code <= 504 && code >= 500) {
+            dispatch(routerRedux.push('/exception/500'));
+            return;
+          }
+          if (code >= 404 && code < 422) {
+            dispatch(routerRedux.push('/exception/404'));
+          }
+          return null;
         },
       };
       res(tempReq, tempRes);

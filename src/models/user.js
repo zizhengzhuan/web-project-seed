@@ -24,6 +24,8 @@ export default {
             notifyCount: 12,
             // 自用属性
             uid: data.user.usid || data.user.gid,
+            org: data.org,
+            role: data.role,
             ...data.user,
           },
         });

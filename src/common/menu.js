@@ -1,24 +1,7 @@
-import { getMenu } from '../utils/sysConfig';
+import { getInit, getMenu } from '../utils/sysConfig';
 import { getUserInfoSync, getUserInfoSyncV2, getOmsVersion } from '../services/api';
-import { isUrl } from '../utils/utils';
 
-function formatter(data, parentPath = '/', parentAuthority) {
-  return data.map(item => {
-    let { path } = item;
-    if (!isUrl(path)) {
-      path = parentPath + item.path;
-    }
-    const result = {
-      ...item,
-      path,
-      authority: item.authority || parentAuthority,
-    };
-    if (item.children) {
-      result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
-    }
-    return result;
-  });
-}
+const init = getInit();
 
 let menuData = null;
 
@@ -28,6 +11,9 @@ export const getMenuData = () => {
   }
   // 默认获取本地配置
   menuData = getMenu();
+  if (init.default && init.default.static) {
+    return menuData;
+  }
   // 如果不开启本地菜单配置，则获取用户服务的菜单信息，需要区分三种情况
   // oms 3.0
   // oms 2.0
