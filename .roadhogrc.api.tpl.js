@@ -115,41 +115,37 @@ export default function request(url, params = {}) {
         query: params.body,
         body: params.body,
       };
+      let currentCode = 200;
       const tempRes = {
         json: data => {
           resolve(data);
         },
         send: data => {
-          resolve(data);
-        },
-        status: code => {
-          if (code >= 200 && code < 300) {
-            return tempRes;
+          if (currentCode >= 200 && currentCode < 300) {
+            resolve(data);
+            return;
           }
           const { dispatch } = store;
-          const errortext = codeMessage[code];
+          const errortext = codeMessage[currentCode];
           notification.error({
-            message: `请求错误 ${code}: ${url}`,
+            message: `请求错误 ${currentCode}: ${url}`,
             description: errortext,
           });
-          if (code === 401) {
+          if (currentCode === 401) {
             dispatch({
               type: 'login/logout',
             });
-            return;
-          }
-          if (code === 403) {
+          } else if (currentCode === 403) {
             dispatch(routerRedux.push('/exception/403'));
-            return;
-          }
-          if (code <= 504 && code >= 500) {
+          } else if (currentCode <= 504 && currentCode >= 500) {
             dispatch(routerRedux.push('/exception/500'));
-            return;
-          }
-          if (code >= 404 && code < 422) {
+          } else if (currentCode >= 404 && currentCode < 422) {
             dispatch(routerRedux.push('/exception/404'));
           }
-          return null;
+        },
+        status: code => {
+          currentCode = code;
+          return tempRes;
         },
       };
       res(tempReq, tempRes);
