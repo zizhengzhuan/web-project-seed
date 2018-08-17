@@ -19,7 +19,9 @@
     "test:component": "roadhog test ./src/components",
     "test:all": "node ./tests/run-tests.js",
     "prettier": "prettier --write ./src/**/**/**/*",
-    "lint:report": "eslint --ext .js,.jsx --format html src -o ./dist/eslint/index.html"
+    "lint:report": "eslint --ext .js,.jsx --format html src -o ./dist/eslint/index.html",
+    "test-block:push": "little-bee push --type=pages --name=UserB",
+    "testblock:pull": "little-bee pull --type=page --name=user-b"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.36",

@@ -1,4 +1,4 @@
-import { queryCurrent } from '../services/api';
+import { queryCurrent, getUserSites } from '../services/api';
 
 export default {
   namespace: 'user',
@@ -6,6 +6,7 @@ export default {
   state: {
     list: [],
     currentUser: {},
+    sites: [],
   },
 
   effects: {
@@ -16,6 +17,8 @@ export default {
         const {
           user: { username: name },
         } = data;
+        const uid = data.user.usid || data.user.gid;
+        const sites = yield call(getUserSites, { lx: 'station', id: uid });
         yield put({
           type: 'saveCurrentUser',
           payload: {
@@ -23,10 +26,16 @@ export default {
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
             notifyCount: 12,
             // 自用属性
-            uid: data.user.usid || data.user.gid,
+            uid,
             org: data.org,
             role: data.role,
             ...data.user,
+          },
+        });
+        yield put({
+          type: 'saveSites',
+          payload: {
+            sites,
           },
         });
       } else {
@@ -51,6 +60,12 @@ export default {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    },
+    saveSites(state, { payload }) {
+      return {
+        ...state,
+        sites: payload.sites,
       };
     },
     changeNotifyCount(state, action) {

@@ -225,6 +225,7 @@ export const loginV2 = {
   servicecfg: [],
   mapcfg: {},
 };
+
 export const getUserInfo = {
   user: {
     username: 'sxw',
@@ -337,4 +338,36 @@ export const getUserInfo = {
   ],
   servicecfg: [],
   mapcfg: {},
+};
+
+export const getUserSites = {
+  data: [
+    {
+      id: '1',
+      site_name: '中心',
+    },
+    {
+      id: '2',
+      site_name: '外海',
+    },
+    {
+      id: '3',
+      site_name: '杜阮',
+    },
+    {
+      id: '4',
+      site_name: '市区河南',
+    },
+    {
+      id: '5',
+      site_name: '滨江',
+    },
+    {
+      id: '6',
+      site_name: '润原',
+    },
+  ],
+  msg: '成功',
+  msgCode: 0,
+  success: true,
 };

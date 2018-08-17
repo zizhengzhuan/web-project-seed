@@ -116,6 +116,28 @@ async function getUserInfoV3() {
   });
 }
 
+async function getUserSitesV2() {
+  return [];
+}
+
+/**
+ * JMBZ 获取登录用户的站点
+ * @param params
+ * @returns {Promise<*>}
+ */
+async function getUserSitesV3(params) {
+  const response = await get({
+    svn: 'OMS_SVR',
+    path: 'right/queryByUser',
+    data: params,
+  });
+  if (response.msgCode !== -1) {
+    return response.data;
+  }
+  // 获取失败
+  return [];
+}
+
 export async function queryNotices() {
   return request('/mock/notices');
 }
@@ -180,4 +202,11 @@ export function getUserInfoSyncV2() {
     console.error(err);
   }
   return null;
+}
+
+export function getUserSites() {
+  if (getOmsVersion() === 2) {
+    return getUserSitesV2();
+  }
+  return getUserSitesV3();
 }

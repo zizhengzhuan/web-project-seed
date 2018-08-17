@@ -1,6 +1,13 @@
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
-import { login, logout, loginV2, getUserInfoByToken, getUserInfo } from './mock/login';
+import {
+  login,
+  logout,
+  loginV2,
+  getUserInfoByToken,
+  getUserInfo,
+  getUserSites,
+} from './mock/login';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -11,6 +18,7 @@ const proxy = {
   'GET /mock/CityServer/rest/omsService/user/login': login,
   'GET /mock/CityServer/rest/omsService/user/logout': logout,
   'GET /mock/CityServer/rest/omsService/user/getUserInfoByToken': getUserInfoByToken,
+  'GET /mock/CityServer/rest/omsService/right/queryByUser': getUserSites,
   'GET /mock/ServiceEngine/rest/userService/login': loginV2,
   'GET /mock/ServiceEngine/rest/userService/getUserInfo': getUserInfo,
 
