@@ -90,8 +90,6 @@ async function logoutV3() {
  */
 async function getUserInfoV2() {
   const username = getItem('username');
-  console.log('username');
-  console.log(username);
   if (typeof username !== 'string' || (typeof username === 'string' && username.length === 0)) {
     return null;
   }

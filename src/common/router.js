@@ -69,16 +69,15 @@ function getFlatMenuData(menus) {
 
 export const getRouterData = app => {
   const routerConfig = {
-    '/': {
-      component: dynamicWrapper(
-        app,
-        [
-          { func: () => import('../models/user'), path: '../models/user' },
-          { func: () => import('../models/login'), path: '../models/login' },
-        ],
-        () => import('../layouts/BasicLayout')
-      ),
+    // #region code block
+    // {{start}}
+    '/': { component: dynamicWrapper(app, [], () => import('../layouts/layoutB/BasicLayout.js')) },
+    '/user': {
+      component: dynamicWrapper(app, [], () => import('../layouts/layoutB/UserLayout.js')),
     },
+    '/user/login': { component: dynamicWrapper(app, [], () => import('../pages/UserB/Login.js')) },
+    // {{end}}
+    // #endregion
     '/exception/403': {
       component: dynamicWrapper(app, [], () => import('../pages/Exception/403')),
     },
@@ -88,24 +87,9 @@ export const getRouterData = app => {
     '/exception/500': {
       component: dynamicWrapper(app, [], () => import('../pages/Exception/500')),
     },
-    '/user': {
-      component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
-    },
-    '/user/login': {
-      component: dynamicWrapper(
-        app,
-        [{ func: () => import('../models/login'), path: '../models/login' }],
-        () => import('../pages/User/Login')
-      ),
-    },
     '/blank': {
       component: dynamicWrapper(app, [], () => import('../layouts/BlankLayout')),
     },
-    // #region code block
-    // {{start}}
-
-    // {{end}}
-    // #endregion
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());

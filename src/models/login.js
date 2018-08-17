@@ -15,7 +15,7 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       const res = yield call(accountLogin, payload);
-      if (res) {
+      if (res && res.data && res.data.token && res.data.token.length > 0) {
         const {
           data: { token },
         } = res;
@@ -23,6 +23,7 @@ export default {
         reloadAuthorized();
         yield put(routerRedux.push('/'));
       } else {
+        setToken();
         yield put({ type: 'changeLoginStatus', payload: { status: 'error', type: 'account' } });
       }
     },
@@ -45,11 +46,11 @@ export default {
         urlParams.searchParams.set('redirect', pathname);
         window.history.replaceState(null, 'login', urlParams.href);
       } finally {
+        setToken();
         yield put({
           type: 'changeLoginStatus',
           payload: {
             status: false,
-            currentToken: '',
           },
         });
         reloadAuthorized();
@@ -59,7 +60,6 @@ export default {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setToken(payload.currentToken);
       return {
         ...state,
         status: payload.status,

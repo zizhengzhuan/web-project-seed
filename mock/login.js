@@ -3,8 +3,15 @@ import { parse } from 'url';
 const menu = [
   {
     path: '/workflow',
-    image: null,
+    image: '/images/menus/工程一张图.png',
     gid: '4',
+    name: '工作流',
+    icon: 'appstore-o',
+    pid: null,
+    vaild: '1',
+    params: null,
+    idx: '1',
+    sys: 'sys1',
     children: [
       {
         path: '/workflow/mgmt',
@@ -31,22 +38,15 @@ const menu = [
         sys: 'sys1',
       },
     ],
-    name: '工作流',
-    icon: 'appstore-o',
-    pid: null,
-    vaild: '1',
-    params: null,
-    idx: '1',
-    sys: 'sys1',
   },
   {
     path: '/maintain',
-    image: '',
+    image: '/images/menus/立户建档.png',
     gid: '9',
     children: [
       {
         path: '/maintain/enumType',
-        image: null,
+        image: '/images/secondMenus/大户用水.png',
         gid: '10',
         name: '枚举值维护',
         icon: null,
