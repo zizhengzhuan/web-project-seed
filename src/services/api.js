@@ -210,3 +210,8 @@ export function getUserSites() {
   }
   return getUserSitesV3();
 }
+
+
+export function updatePassword() {
+
+}

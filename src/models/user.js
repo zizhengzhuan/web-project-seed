@@ -1,4 +1,4 @@
-import { queryCurrent, getUserSites } from '../services/api';
+import { queryCurrent, getUserSites, updatePassword } from '../services/api';
 
 export default {
   namespace: 'user',
@@ -7,6 +7,7 @@ export default {
     list: [],
     currentUser: {},
     sites: [],
+    isShowPassModal: false,
   },
 
   effects: {
@@ -53,6 +54,9 @@ export default {
         // });
       }
     },
+    *upDatePassword({ payload }, { call, put }) {
+      const res = yield call(updatePassword, payload);
+    },
   },
 
   reducers: {
@@ -75,6 +79,12 @@ export default {
           ...state.currentUser,
           notifyCount: action.payload,
         },
+      };
+    },
+    showPassModal(state, { payload }){
+      return {
+        ...state,
+        isShowPassModal: payload.isShowPassModal,
       };
     },
   },
