@@ -4,7 +4,6 @@
   "description": "网站开发种子项目",
   "private": true,
   "scripts": {
-    "precommit": "npm run lint-staged",
     "start": "cross-env BROWSER=none little-bee dev",
     "start:no-proxy": "cross-env BROWSER=none NO_PROXY=true little-bee dev",
     "build": "cross-env BROWSER=none little-bee build",
@@ -20,8 +19,7 @@
     "test:all": "node ./tests/run-tests.js",
     "prettier": "prettier --write ./src/**/**/**/*",
     "lint:report": "eslint --ext .js,.jsx --format html src -o ./dist/eslint/index.html",
-    "test-block:push": "little-bee push --type=pages --name=UserB",
-    "testblock:pull": "little-bee pull --type=page --name=user-b"
+    "plugin:publish": "little-bee plugin:publish"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.36",
@@ -33,6 +31,7 @@
     "dva-loading": "^1.0.4",
     "enquire-js": "^0.2.1",
     "glob": "^7.1.2",
+    "little-bee": "^0.0.3",
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.4.1",
     "moment": "^2.19.1",
@@ -65,7 +64,6 @@
     "eslint-plugin-react": "^7.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^6.0.0",
-    "little-bee": "^0.0.1-beta3",
     "mockjs": "^1.0.1-beta3",
     "prettier": "^1.12.0",
     "rc-drawer-menu": "^0.5.7",
@@ -75,8 +73,8 @@
     "stylelint": "^8.4.0",
     "stylelint-config-prettier": "^3.2.0",
     "stylelint-config-standard": "^18.0.0",
-    "yc": "^2.5.7",
-    "yd": "^2.12.4"
+    "yc": "^2.6.0",
+    "yd": "^2.10.3"
   },
   "lint-staged": {
     "**/*.{js,jsx,less}": [
