@@ -10,8 +10,6 @@ _roadhog-api-doc
 /dist
 /vscode
 /.vscode
-/src/layouts
-/src/pages
 
 # misc
 .DS_Store
@@ -29,9 +27,10 @@ jsconfig.json
 .svn
 
 # Development Directory
-/src/pages
-!/src/pages/Exception/
-!/src/pages/User/
+/src/layouts/*
+!/src/layouts/BlankLayout.js
+/src/pages/*
+!/src/pages/Exception
 
-/public/*/
+/public/*
 !/public/config
