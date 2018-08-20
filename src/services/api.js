@@ -233,11 +233,11 @@ export function getUserInfoSyncV2() {
   return null;
 }
 
-export function getUserSites() {
+export function getUserSites(params) {
   if (getOmsVersion() === 2) {
-    return getUserSitesV2();
+    return getUserSitesV2(params);
   }
-  return getUserSitesV3();
+  return getUserSitesV3(params);
 }
 
 
