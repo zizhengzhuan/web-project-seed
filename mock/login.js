@@ -371,3 +371,9 @@ export const getUserSites = {
   msgCode: 0,
   success: true,
 };
+
+export const updatePassword = {
+  msg: '成功',
+  msgCode: 0,
+  success: true,
+};

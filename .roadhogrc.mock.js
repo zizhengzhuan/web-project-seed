@@ -7,6 +7,7 @@ import {
   getUserInfoByToken,
   getUserInfo,
   getUserSites,
+  updatePassword,
 } from './mock/login';
 
 // 是否禁用代理
@@ -19,6 +20,7 @@ const proxy = {
   'GET /mock/CityServer/rest/omsService/user/logout': logout,
   'GET /mock/CityServer/rest/omsService/user/getUserInfoByToken': getUserInfoByToken,
   'GET /mock/CityServer/rest/omsService/right/queryByUser': getUserSites,
+  'GET /mock/CityServer/rest/omsService/user/updatePassWord': updatePassword,
   'GET /mock/ServiceEngine/rest/userService/login': loginV2,
   'GET /mock/ServiceEngine/rest/userService/getUserInfo': getUserInfo,
 

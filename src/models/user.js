@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { queryCurrent, getUserSites, updatePassword } from '../services/api';
 
 export default {
@@ -54,8 +55,15 @@ export default {
         // });
       }
     },
-    *upDatePassword({ payload }, { call, put }) {
-      const res = yield call(updatePassword, payload);
+    *updatePassword({ payload }, { call, put }) {
+      const success = yield call(updatePassword, payload);
+      if (success) {
+        yield put({
+          type: 'login/logoutNoFetch',
+        });
+      } else {
+        message.warning('修改密码失败');
+      }
     },
   },
 

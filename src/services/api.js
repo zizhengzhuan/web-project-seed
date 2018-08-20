@@ -121,7 +121,7 @@ async function getUserSitesV2() {
 }
 
 /**
- * JMBZ 获取登录用户的站点
+ * 获取登录用户的站点
  * @param params
  * @returns {Promise<*>}
  */
@@ -136,6 +136,35 @@ async function getUserSitesV3(params) {
   }
   // 获取失败
   return [];
+}
+
+/**
+ * 修改密码，对接 oms2
+ */
+async function updatePasswordV2() {
+  return true;
+}
+
+/**
+ * 修改密码，对接 oms3
+ *
+ * @param {object} params - 参数
+ * @param {int} params.uid - 用户标示
+ * @param {string} params.loginName - 用户名称
+ * @param {string} params.oldpsw - 老密码
+ * @param {string} params.newpsw - 新密码
+ */
+async function updatePasswordV3(params) {
+  const response = await get({
+    svn: 'OMS_SVR',
+    path: 'user/updatePassWord',
+    data: params,
+  });
+  if (response.msgCode !== 0) {
+    return false;
+  }
+  // 获取失败
+  return true;
 }
 
 export async function queryNotices() {
@@ -212,6 +241,9 @@ export function getUserSites() {
 }
 
 
-export function updatePassword() {
-
+export function updatePassword(params) {
+  if (getOmsVersion() === 2) {
+    return updatePasswordV2(params);
+  }
+  return updatePasswordV3(params);
 }
