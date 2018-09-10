@@ -41,28 +41,6 @@ const requestError = {
   },
 };
 
-const loading = {
-  referenceCount: 0,
-  loading: null,
-  show: () => {
-    loading.referenceCount++;
-    if (loading.referenceCount === 1 && loading.loading === null) {
-      loading.loading = message.loading('服务请求中···', 0);
-    }
-  },
-  hide: () => {
-    if (loading.referenceCount > 0) {
-      loading.referenceCount--;
-    }
-    if (loading.referenceCount === 0 && loading.loading) {
-      loading.loading();
-      setTimeout(() => {
-        loading.loading = null;
-      }, 10);
-    }
-  },
-};
-
 const codeMessage = {
   200: '服务器成功返回请求的数据',
   201: '新建或修改数据成功。',
@@ -203,9 +181,6 @@ export default function request(url, params = {}) {
       }
     }
 
-    if (newOptions.showLoading) {
-      loading.show();
-    }
     return fetch(url2, newOptions)
       .then(checkStatus)
       .then(response => {

@@ -1,3 +1,3 @@
 module.exports = {
-  tpl: './.roadhogrc.api.tpl.js',
+  tpl: './config/roadhogrc.api.tpl.js',
 };

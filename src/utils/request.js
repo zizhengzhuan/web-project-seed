@@ -40,28 +40,6 @@ const requestError = {
   },
 };
 
-const loading = {
-  referenceCount: 0,
-  loading: null,
-  show: () => {
-    loading.referenceCount++;
-    if (loading.referenceCount === 1 && loading.loading === null) {
-      loading.loading = message.loading('服务请求中···', 0);
-    }
-  },
-  hide: () => {
-    if (loading.referenceCount > 0) {
-      loading.referenceCount--;
-    }
-    if (loading.referenceCount === 0 && loading.loading) {
-      loading.loading();
-      setTimeout(() => {
-        loading.loading = null;
-      }, 10);
-    }
-  },
-};
-
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -80,7 +58,6 @@ const codeMessage = {
   504: '网关超时。',
 };
 function checkStatus(response) {
-  loading.hide();
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -98,15 +75,16 @@ function checkStatus(response) {
 /**
  * Requests a URL, returning a promise.
  *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
+ * @param  {string} url - 请求抵制
+ * @param  {object} [options] - 请求参数
+ * @param  {string} [options.credentials = 'include'] - 表示 cookie 既可以同域发送，也可以跨域发送
+ * @param  {boolean} [options.validate = true] - 表示进行针对 msgCode 的错误验证
  * @return {object}           An object containing either "data" or "err"
  */
 function request(url, options) {
   const defaultOptions = {
     credentials: 'include',
     validate: true,
-    showLoading: true,
   };
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
@@ -149,9 +127,6 @@ function request(url, options) {
     }
   }
 
-  if (newOptions.showLoading) {
-    loading.show();
-  }
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
