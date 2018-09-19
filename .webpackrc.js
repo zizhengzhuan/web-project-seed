@@ -3,16 +3,6 @@ export default {
   extraBabelPlugins: [
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
     ['import', { libraryName: 'yd', libraryDirectory: 'es', style: true }, 'yd-import'],
-    [
-      'import',
-      {
-        libraryName: 'yd-gis',
-        style: true,
-        libraryDirectory: 'es',
-        camel2DashComponentName: false,
-      },
-      'yd-gis-import',
-    ],
   ],
   proxy: {
     '/proxyOms': {

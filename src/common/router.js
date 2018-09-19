@@ -71,9 +71,9 @@ export const getRouterData = app => {
   const routerConfig = {
     // #region code block
     // {{start}}
-    '/': { component: dynamicWrapper(app, [], () => import('../layouts/layoutB/BasicLayout.js')) },
+    '/': { component: dynamicWrapper(app, [], () => import('../layouts/LayoutB/BasicLayout.js')) },
     '/user': {
-      component: dynamicWrapper(app, [], () => import('../layouts/layoutB/UserLayout.js')),
+      component: dynamicWrapper(app, [], () => import('../layouts/LayoutB/UserLayout.js')),
     },
     '/user/login': { component: dynamicWrapper(app, [], () => import('../pages/UserB/Login.js')) },
     // {{end}}
