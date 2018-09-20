@@ -126,13 +126,13 @@ async function getUserSitesV2() {
  * @returns {Promise<*>}
  */
 async function getUserSitesV3(params) {
-  const response = await get({
+  const res = await get({
     svn: 'OMS_SVR',
     path: 'right/queryByUser',
     data: params,
   });
-  if (response.msgCode !== -1) {
-    return response.data;
+  if (res && res.msgCode !== -1) {
+    return res.data;
   }
   // 获取失败
   return [];
