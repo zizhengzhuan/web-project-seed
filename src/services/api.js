@@ -48,7 +48,7 @@ async function loginV2(params) {
   if (res && res.isSuccess) {
     setItem('username', res.user.username);
     res.data = {
-      token: '',
+      token: 'i am token',
     };
     return res;
   }
