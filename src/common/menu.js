@@ -6,7 +6,7 @@ const init = getInit();
 let menuData = null;
 
 export const getMenuData = () => {
-  if (menuData) {
+  if (Array.isArray(menuData) && menuData.length > 0) {
     return menuData;
   }
   // 默认获取本地配置
